@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using W40KRogueTrader_BuildPlanner.Model;
+using W40KRogueTrader_BuildPlanner.Repository;
+using W40KRogueTrader_BuildPlanner.ViewModel;
+
+namespace W40KRogueTrader_BuildPlanner.Factory
+{
+    public sealed class SkillUIOFactory
+    {
+        private readonly SkillRepository skillRepository;
+        private readonly CharacteristicsRepository characteristicsRepository;
+
+        public SkillUIOFactory(SkillRepository skillRepo, CharacteristicsRepository characteristicsRepository)
+        {
+            this.skillRepository = skillRepo;
+            this.characteristicsRepository = characteristicsRepository;
+        }
+
+        public SkillUIO fromSkill(Skill.SkillId skillId)
+        {
+            Skill? skill = skillRepository.Skills.Find(x => x.Id == skillId);
+
+            if (skill == null)
+            {
+                throw new Exception("Skill with id '" + skillId.ToString() + "' not found in repository");
+            }
+
+            Characteristic? charateristic = characteristicsRepository.Characteristics.Find(x => x.Id == skill.BaseCharacteristic);
+
+            if (charateristic == null)
+            {
+                throw new Exception("Characteristic with id '" + skill.BaseCharacteristic.ToString() + "' not found in repository");
+            }
+
+            return new SkillUIO(skill.Id, skill.Name, skill.Description, charateristic.StartingValue, 0);
+        }
+    }
+}

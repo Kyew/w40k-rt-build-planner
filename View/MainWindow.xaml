@@ -1,0 +1,14 @@
+﻿<Window x:Class="W40KRogueTrader_BuildPlanner.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:W40KRogueTrader_BuildPlanner.View"
+        mc:Ignorable="d"
+        Title="W40K Rogue Trader - Build Planner" Height="720" Width="1280">
+    <DockPanel LastChildFill="True">
+        <Rectangle DockPanel.Dock="Top" Fill="LightPink" Height="120" HorizontalAlignment="Stretch" />
+        <Frame DockPanel.Dock="Right" Source="DescriptionView.xaml" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="400"/>
+        <Frame DockPanel.Dock="Left" Source="RogueTraderView.xaml" VerticalAlignment="Stretch"/>
+    </DockPanel>
+</Window>

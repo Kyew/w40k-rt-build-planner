@@ -1,0 +1,100 @@
+﻿<Page x:Class="W40KRogueTrader_BuildPlanner.View.RogueTraderView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:W40KRogueTrader_BuildPlanner.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="RogueTraderView" Background="LightCyan">
+    <Page.Resources>
+        <Style x:Key="DescribableCB" TargetType="ComboBoxItem">
+            <EventSetter Event="PreviewMouseMove" Handler="DescribableCBI_MouseMove" />
+        </Style>
+        <Style x:Key="DescribableDG" TargetType="DataGridRow">
+            <EventSetter Event="PreviewMouseMove" Handler="DescribableDGR_MouseMove" />
+        </Style>
+    </Page.Resources>
+    <StackPanel Margin="20">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" Name="CaracterName"/>
+                    <RowDefinition Height="25" Name="Homeworld"/>
+                    <RowDefinition Height="25" Name="Origin"/>
+                    <RowDefinition Height="25" Name="Triumph"/>
+                    <RowDefinition Height="25" Name="DarkestHour"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="Name"/>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="RTName" Text="{Binding Path=RTName}"/>
+
+                <Label Grid.Row="1" Grid.Column="0" Content="Home world"/>
+                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="RTHomeworld" ItemContainerStyle="{StaticResource DescribableCB}"></ComboBox>
+                <ComboBox Grid.Row="1" Grid.Column="2" x:Name="RTHomeworldArg" ItemContainerStyle="{StaticResource DescribableCB}"></ComboBox>
+
+                <Label Grid.Row="2" Grid.Column="0" Content="Origin"/>
+                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="RTOrigin" ItemContainerStyle="{StaticResource DescribableCB}"></ComboBox>
+                <ComboBox Grid.Row="2" Grid.Column="2" x:Name="RTOriginArg" ItemContainerStyle="{StaticResource DescribableCB}"></ComboBox>
+
+                <Label Grid.Row="3" Grid.Column="0" Content="Triumph"/>
+                <ComboBox Grid.Row="3" Grid.Column="1" x:Name="RTTriumph" ItemContainerStyle="{StaticResource DescribableCB}"></ComboBox>
+
+                <Label Grid.Row="4" Grid.Column="0" Content="DarkestHour"/>
+                <ComboBox Grid.Row="4" Grid.Column="1" x:Name="RTDarkestHour" ItemContainerStyle="{StaticResource DescribableCB}"></ComboBox>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" Name="Archetype1"/>
+                    <RowDefinition Height="25" Name="Archetype2"/>
+                    <RowDefinition Height="25" Name="Archetype3"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="1st Archetype"/>
+                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="RTArchetype1" ItemContainerStyle="{StaticResource DescribableCB}"></ComboBox>
+                <Button Grid.Row="0" Grid.Column="2" x:Name="Arc1Edit" Content="Edit"/>
+
+                <Label Grid.Row="1" Grid.Column="0" Content="2nd Archetype"/>
+                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="RTArchetype2" ItemContainerStyle="{StaticResource DescribableCB}"></ComboBox>
+                <Button Grid.Row="1" Grid.Column="2" x:Name="Arc2Edit" Content="Edit"/>
+
+                <Label Grid.Row="2" Grid.Column="0" Content="3rd Archetype"/>
+                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="RTArchetype3" ItemContainerStyle="{StaticResource DescribableCB}"></ComboBox>
+                <Button Grid.Row="2" Grid.Column="2" x:Name="Arc3Edit" Content="Edit"/>
+            </Grid>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0, 20, 0, 0">
+            <DataGrid x:Name="CharacteristicsDG" AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="false" CanUserAddRows="false" Margin="10, 0, 10, 0" ItemContainerStyle="{StaticResource DescribableDG}">
+                <DataGrid.Resources>
+                    <DataTemplate x:Key="EditCharacteristicTemplate">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="+"/>
+                            <Button Content="-"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Name}"/>
+                    <DataGridTextColumn Binding="{Binding StartingValue}"/>
+                    <DataGridTemplateColumn CellTemplate="{StaticResource EditCharacteristicTemplate}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid x:Name="SkillsDG" AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="false" CanUserAddRows="false" Margin="10, 0, 10, 0" ItemContainerStyle="{StaticResource DescribableDG}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Name}"/>
+                    <DataGridTextColumn Binding="{Binding TotalValue}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </StackPanel>
+</Page>
