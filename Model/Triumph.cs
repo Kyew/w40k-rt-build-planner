@@ -17,9 +17,12 @@ namespace W40KRogueTrader_BuildPlanner.Model
 
         public TriumphId Id { get; }
 
-        public Triumph(TriumphId id, String description = "") : base(Enum.GetName(id).Replace('_', ' '), description)
+        public SkillModifier SkillModifier { get; }
+
+        public Triumph(TriumphId id, String description, SkillModifier skillModifier) : base(Enum.GetName(id).Replace('_', ' '), description)
         {
             Id = id;
+            SkillModifier = skillModifier;
         }
     }
 }

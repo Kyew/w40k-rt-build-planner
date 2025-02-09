@@ -20,7 +20,7 @@ namespace W40KRogueTrader_BuildPlanner.Factory
             this.characteristicsRepository = characteristicsRepository;
         }
 
-        public SkillUIO fromSkill(Skill.SkillId skillId)
+        public SkillUIO fromSkill(Skill.SkillId skillId, List<SkillModifier> skillModifiers)
         {
             Skill? skill = skillRepository.Skills.Find(x => x.Id == skillId);
 
@@ -36,7 +36,16 @@ namespace W40KRogueTrader_BuildPlanner.Factory
                 throw new Exception("Characteristic with id '" + skill.BaseCharacteristic.ToString() + "' not found in repository");
             }
 
-            return new SkillUIO(skill.Id, skill.Name, skill.Description, charateristic.StartingValue, 0);
+            int totalModifier = 0;
+            foreach (SkillModifier mod in skillModifiers)
+            {
+                if (mod.Id == skillId)
+                {
+                    totalModifier += mod.Value;
+                }
+            }
+
+            return new SkillUIO(skill.Id, skill.Name, skill.Description, charateristic.StartingValue, totalModifier);
         }
     }
 }

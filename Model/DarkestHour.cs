@@ -16,10 +16,12 @@ namespace W40KRogueTrader_BuildPlanner.Model
         }
 
         public DarkestHourId Id { get; }
+        public SkillModifier SkillModifier { get; }
 
-        public DarkestHour(DarkestHourId id, String description = "") : base(Enum.GetName(id).Replace('_', ' '), description)
+        public DarkestHour(DarkestHourId id, String description, SkillModifier skillModifier) : base(Enum.GetName(id).Replace('_', ' '), description)
         {
             Id = id;
+            SkillModifier = skillModifier;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,8 @@ using System.Threading.Tasks;
 using W40KRogueTrader_BuildPlanner.Factory;
 using W40KRogueTrader_BuildPlanner.Model;
 using W40KRogueTrader_BuildPlanner.Repository;
+using W40KRogueTrader_BuildPlanner.Utils.Extensions;
+
 
 namespace W40KRogueTrader_BuildPlanner.ViewModel
 {
@@ -59,10 +62,34 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
         public List<Origin> Origins => originRepository.Origins;
 
         public Origin? RTOrigin { get; set; }
-        public OriginArg? RTOriginArg { get; set; } 
+        public OriginArg? RTOriginArg { get; set; }
 
-        public Triumph? RTTriumph { get; set; }
-        public DarkestHour? RTDarkestHour { get; set; }
+        private Triumph? rtTriumph;
+        public Triumph? RTTriumph
+        {
+            get => rtTriumph;
+            set
+            {
+                if (rtTriumph != value)
+                {
+                    rtTriumph = value;
+                    updateSkills();
+                }
+            }
+        }
+        private DarkestHour? rtDarkestHour;
+        public DarkestHour? RTDarkestHour
+        {
+            get => rtDarkestHour;
+            set
+            {
+                if (rtDarkestHour != value)
+                {
+                    rtDarkestHour = value;
+                    updateSkills();
+                }
+            }
+        }
 
         public List<Archetype> Lvl1Archetypes => archetypeRepository.Lvl1Archetypes;
         public List<Archetype> Lvl2Archetypes => archetypeRepository.Lvl2Archetypes;
@@ -73,23 +100,7 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
         public Archetype? RTLvl3Archetype { get; set; }
 
         public List<Characteristic> Characteristics => characteristicsRepository.Characteristics;
-        public List<SkillUIO> Skills
-        {
-            get
-            {
-                List<Skill> skills = skillRepository.Skills;
-                SkillUIOFactory factory = new SkillUIOFactory(skillRepository, characteristicsRepository);
-
-                try
-                {
-                    return skills.Select(skill => factory.fromSkill(skill.Id)).ToList();
-                }
-                catch (Exception)
-                {
-                    return new List<SkillUIO>();
-                }
-            }
-        }
+        public ObservableCollection<SkillUIO> Skills { get; private set; } = new ObservableCollection<SkillUIO>();
 
         public void storeDescribable(ADescribable describable)
         {
@@ -117,6 +128,26 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
             this.originRepository = originRepository;
             this.skillRepository = skillRepository;
             this.descriptionRepository = descriptionRepository;
+
+            updateSkills();
+        }
+
+        private void updateSkills()
+        {
+            List<Skill> skills = skillRepository.Skills;
+            SkillUIOFactory factory = new SkillUIOFactory(skillRepository, characteristicsRepository);
+
+            List<SkillModifier> skillModifiers = new List<SkillModifier>();
+            if (RTTriumph != null)
+            {
+                skillModifiers.Add(RTTriumph.SkillModifier);
+            }
+            if (RTDarkestHour != null)
+            {
+                skillModifiers.Add(RTDarkestHour.SkillModifier);
+            }
+
+            Skills.CopyFrom(skills.Select(skill => factory.fromSkill(skill.Id, skillModifiers)).ToList());
         }
     }
 }
