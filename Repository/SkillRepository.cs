@@ -27,18 +27,19 @@ namespace W40KRogueTrader_BuildPlanner.Repository
 
         private SkillRepository()
         {
-            Skills = new List<Skill> { new Skill(Skill.SkillId.Athletics, "STR", Characteristic.CharacteristicId.Strength),
-                                       new Skill(Skill.SkillId.Awareness, "PER", Characteristic.CharacteristicId.Perception),
-                                       new Skill(Skill.SkillId.Carouse, "TGH", Characteristic.CharacteristicId.Thoughness),
-                                       new Skill(Skill.SkillId.Coercicion, "FEL", Characteristic.CharacteristicId.Fellowship),
-                                       new Skill(Skill.SkillId.Commerce, "FEL", Characteristic.CharacteristicId.Fellowship),
-                                       new Skill(Skill.SkillId.Logic, "INT", Characteristic.CharacteristicId.Intelligence),
-                                       new Skill(Skill.SkillId.Lore_Imperium, "INT", Characteristic.CharacteristicId.Intelligence),
-                                       new Skill(Skill.SkillId.Lore_Warp, "INT", Characteristic.CharacteristicId.Intelligence),
-                                       new Skill(Skill.SkillId.Lore_Xenos, "INT", Characteristic.CharacteristicId.Intelligence),
-                                       new Skill(Skill.SkillId.Medicae, "INT", Characteristic.CharacteristicId.Intelligence),
-                                       new Skill(Skill.SkillId.Persuasion, "FEL", Characteristic.CharacteristicId.Fellowship),
-                                       new Skill(Skill.SkillId.Tech_Use, "INT", Characteristic.CharacteristicId.Intelligence) };
+            Skills = new List<Skill> { new Skill(Skill.SkillId.Athletics, "", Characteristic.CharacteristicId.Strength),
+                                       new Skill(Skill.SkillId.Awareness, "", Characteristic.CharacteristicId.Perception),
+                                       new Skill(Skill.SkillId.Carouse, "", Characteristic.CharacteristicId.Thoughness),
+                                       new Skill(Skill.SkillId.Coercicion, "", Characteristic.CharacteristicId.Fellowship),
+                                       new Skill(Skill.SkillId.Commerce, "", Characteristic.CharacteristicId.Fellowship),
+                                       new Skill(Skill.SkillId.Demolition, "", Characteristic.CharacteristicId.Agility),
+                                       new Skill(Skill.SkillId.Logic, "", Characteristic.CharacteristicId.Intelligence),
+                                       new Skill(Skill.SkillId.Lore_Imperium, "", Characteristic.CharacteristicId.Intelligence),
+                                       new Skill(Skill.SkillId.Lore_Warp, "", Characteristic.CharacteristicId.Intelligence),
+                                       new Skill(Skill.SkillId.Lore_Xenos, "", Characteristic.CharacteristicId.Intelligence),
+                                       new Skill(Skill.SkillId.Medicae, "", Characteristic.CharacteristicId.Intelligence),
+                                       new Skill(Skill.SkillId.Persuasion, "", Characteristic.CharacteristicId.Fellowship),
+                                       new Skill(Skill.SkillId.Tech_Use, "", Characteristic.CharacteristicId.Intelligence) };
         }
     }
 }

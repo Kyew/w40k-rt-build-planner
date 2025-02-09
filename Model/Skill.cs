@@ -15,6 +15,7 @@ namespace W40KRogueTrader_BuildPlanner.Model
             Carouse,
             Coercicion,
             Commerce,
+            Demolition,
             Logic,
             Lore_Imperium,
             Lore_Warp,
