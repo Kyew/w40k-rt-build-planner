@@ -336,13 +336,73 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
          * Characteristics
          ***/
         #region Characteristics
+        private static readonly int NumberOfFreeCharacteristicsPoints = 30;
+
         public ObservableCollection<CharacteristicUIO> Characteristics { get; private set; } = new ObservableCollection<CharacteristicUIO>();
+        public Dictionary<Characteristic.CharacteristicId, int> FreeCharacteristicsModifiers = new Dictionary<Characteristic.CharacteristicId, int>();
+        public int RemainingFreeCharacteristicsPoints { get; private set; } = NumberOfFreeCharacteristicsPoints;
 
         private void updateCharacteristics()
         {
             CharacteristicUIOFactory factory = new CharacteristicUIOFactory();
+            List<CharacteristicModifier> freeModifiers = getAllocatedFreeCharacteristicModifiers();
 
-            Characteristics.CopyFrom(characteristicsRepository.Characteristics.Select(characteristic => factory.fromCharateristic(characteristic, RTHomeWorld, RTHomeWorldArg)).ToList());
+            Characteristics.CopyFrom(characteristicsRepository.Characteristics.Select(characteristic => factory.fromCharateristic(characteristic, RTHomeWorld, RTHomeWorldArg, freeModifiers)).ToList());
+        }
+
+        public void addFreePointsToCharacteristic(Characteristic.CharacteristicId characteristicId)
+        {
+            if (RemainingFreeCharacteristicsPoints == 0)
+            {
+                return;
+            }
+
+            if (FreeCharacteristicsModifiers.ContainsKey(characteristicId))
+            {
+                if (FreeCharacteristicsModifiers[characteristicId] < 10)
+                {
+                    FreeCharacteristicsModifiers[characteristicId] += 5;
+                    RemainingFreeCharacteristicsPoints -= 5;
+                }
+            }
+            else
+            {
+                FreeCharacteristicsModifiers.Add(characteristicId, 5);
+                RemainingFreeCharacteristicsPoints -= 5;
+            }
+            updateCharacteristics();
+        }
+
+        public void retrieveFreePointsToCharacteristic(Characteristic.CharacteristicId characteristicId)
+        {
+            if (RemainingFreeCharacteristicsPoints == NumberOfFreeCharacteristicsPoints)
+            {
+                return;
+            }
+
+            if (FreeCharacteristicsModifiers.ContainsKey(characteristicId))
+            {
+                if (FreeCharacteristicsModifiers[characteristicId] > 0)
+                {
+                    FreeCharacteristicsModifiers[characteristicId] -= 5;
+                    RemainingFreeCharacteristicsPoints += 5;
+                }
+            }
+            updateCharacteristics();
+        }
+
+        private List<CharacteristicModifier> getAllocatedFreeCharacteristicModifiers()
+        {
+            List<CharacteristicModifier> modifiers = new List<CharacteristicModifier>();
+
+            foreach (KeyValuePair<Characteristic.CharacteristicId, int> keyValuePair in FreeCharacteristicsModifiers)
+            {
+                if (keyValuePair.Value > 0)
+                {
+                    modifiers.Add(new CharacteristicModifier(keyValuePair.Key, keyValuePair.Value));
+                }
+            }
+            return modifiers;
         }
         #endregion
 

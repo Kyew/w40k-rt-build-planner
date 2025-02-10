@@ -78,8 +78,8 @@
                 <DataGrid.Resources>
                     <DataTemplate x:Key="EditCharacteristicTemplate">
                         <StackPanel Orientation="Horizontal">
-                            <Button Content="+"/>
-                            <Button Content="-"/>
+                            <Button Content="+" Click="AddCharacteristic_Clicked" />
+                            <Button Content="-" Click="RetrieveCharacteristic_Clicked" />
                         </StackPanel>
                     </DataTemplate>
                 </DataGrid.Resources>

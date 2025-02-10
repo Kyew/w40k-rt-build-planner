@@ -233,6 +233,26 @@ namespace W40KRogueTrader_BuildPlanner.View
         {
             CharacteristicsDG.ItemsSource = viewModel.Characteristics;
         }
+
+        private void AddCharacteristic_Clicked(object sender, RoutedEventArgs e)
+        {
+            CharacteristicUIO? characteristic = ((Button)sender).DataContext as CharacteristicUIO;
+
+            if (characteristic != null)
+            {
+                viewModel.addFreePointsToCharacteristic(characteristic.Characteristic.Id);
+            }
+        }
+
+        private void RetrieveCharacteristic_Clicked(object sender, RoutedEventArgs e)
+        {
+            CharacteristicUIO? characteristic = ((Button)sender).DataContext as CharacteristicUIO;
+
+            if (characteristic != null)
+            {
+                viewModel.retrieveFreePointsToCharacteristic(characteristic.Characteristic.Id);
+            }
+        }
         #endregion
 
         /***

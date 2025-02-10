@@ -12,7 +12,7 @@ namespace W40KRogueTrader_BuildPlanner.Factory
     {
         public CharacteristicUIOFactory() { }
 
-        public CharacteristicUIO fromCharateristic(Characteristic characteristic, HomeWorld? homeWorld = null, HomeWorldArg? homeWorldArg = null)
+        public CharacteristicUIO fromCharateristic(Characteristic characteristic, HomeWorld? homeWorld = null, HomeWorldArg? homeWorldArg = null, List<CharacteristicModifier>? freeModifiers = null)
         {
             int totalModifier = 0;
             if (homeWorld != null)
@@ -38,6 +38,16 @@ namespace W40KRogueTrader_BuildPlanner.Factory
                                 totalModifier += modifier.Value;
                             }
                         }
+                    }
+                }
+            }
+            if (freeModifiers != null)
+            {
+                foreach (CharacteristicModifier modifier in freeModifiers)
+                {
+                    if (modifier.Id == characteristic.Id)
+                    {
+                        totalModifier += modifier.Value;
                     }
                 }
             }
