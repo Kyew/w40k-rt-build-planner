@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace W40KRogueTrader_BuildPlanner.Model
 {
-    public class DarkestHour : ADescribable
+    public class DarkestHour : IDescribable
     {
         public enum DarkestHourId
         {
@@ -16,11 +16,13 @@ namespace W40KRogueTrader_BuildPlanner.Model
         }
 
         public DarkestHourId Id { get; }
+        public Description Description { get; }
         public SkillModifier SkillModifier { get; }
 
-        public DarkestHour(DarkestHourId id, String description, SkillModifier skillModifier) : base(Enum.GetName(id).Replace('_', ' '), description)
+        public DarkestHour(DarkestHourId id, String description, SkillModifier skillModifier)
         {
             Id = id;
+            Description = new Description(Enum.GetName(Id).Replace('_', ' '), description);
             SkillModifier = skillModifier;
         }
     }

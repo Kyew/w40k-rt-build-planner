@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace W40KRogueTrader_BuildPlanner.Model
 {
-    public class Archetype : ADescribable
+    public class Archetype : IDescribable
     {
         public enum ArchetypeId
         {
@@ -28,10 +28,15 @@ namespace W40KRogueTrader_BuildPlanner.Model
         public ArchetypeId Id { get; }
         public List<Archetype>? PossibleNextArchetypes { get; }
 
-        public Archetype(ArchetypeId id, String description = "", List<Archetype>? possibleNextArchetypes = null) : base(Enum.GetName(id).Replace('_', ' '), description)
+        public Description Description { get; }
+
+        public Archetype(ArchetypeId id, String description = "", List<Archetype>? possibleNextArchetypes = null)
         {
             Id = id;
+            Description = new Description(Enum.GetName(Id).Replace('_', ' '), description);
+
             PossibleNextArchetypes = possibleNextArchetypes;
         }
     }
 }
+

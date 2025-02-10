@@ -72,13 +72,13 @@ namespace W40KRogueTrader_BuildPlanner.View
         private void populateHomeworldCombobox()
         {
             RTHomeworld.ItemsSource = viewModel.HomeWorlds;
-            RTHomeworld.DisplayMemberPath = "Name";
+            RTHomeworld.DisplayMemberPath = "Description.Name";
         }
 
         private void populateHomeworldArgCombobox()
         {
             RTHomeworldArg.ItemsSource = viewModel.HomeWorldArgs;
-            RTHomeworldArg.DisplayMemberPath = "Name";
+            RTHomeworldArg.DisplayMemberPath = "Description.Name";
             RTHomeworldArg.Visibility = viewModel.HomeWorldArgs.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
 
@@ -106,13 +106,13 @@ namespace W40KRogueTrader_BuildPlanner.View
         private void populateOriginCombobox()
         {
             RTOrigin.ItemsSource = viewModel.Origins;
-            RTOrigin.DisplayMemberPath = "Name";
+            RTOrigin.DisplayMemberPath = "Description.Name";
         }
 
         private void populateOriginArgCombobox()
         {
             RTOriginArg.ItemsSource = viewModel.OriginArgs;
-            RTOriginArg.DisplayMemberPath = "Name";
+            RTOriginArg.DisplayMemberPath = "Description.Name";
             RTOriginArg.Visibility = viewModel.OriginArgs.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
         private void RTOrigin_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -139,7 +139,7 @@ namespace W40KRogueTrader_BuildPlanner.View
         private void populateTriumphCombobox()
         {
             RTTriumph.ItemsSource = viewModel.Triumphs;
-            RTTriumph.DisplayMemberPath = "Name";
+            RTTriumph.DisplayMemberPath = "Description.Name";
             RTTriumph.Visibility = viewModel.Triumphs.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
 
@@ -161,7 +161,7 @@ namespace W40KRogueTrader_BuildPlanner.View
         private void populateDarkestHourCombobox()
         {
             RTDarkestHour.ItemsSource = viewModel.DarkestHours;
-            RTDarkestHour.DisplayMemberPath = "Name";
+            RTDarkestHour.DisplayMemberPath = "Description.Name";
             RTDarkestHour.Visibility = viewModel.DarkestHours.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
 
@@ -183,7 +183,7 @@ namespace W40KRogueTrader_BuildPlanner.View
         private void populateArchetype1Combobox()
         {
             RTArchetype1.ItemsSource = viewModel.Lvl1Archetypes;
-            RTArchetype1.DisplayMemberPath = "Name";
+            RTArchetype1.DisplayMemberPath = "Description.Name";
         }
 
         private void RTArchetype1_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -194,7 +194,7 @@ namespace W40KRogueTrader_BuildPlanner.View
         private void populateArchetype2Combobox()
         {
             RTArchetype2.ItemsSource = viewModel.Lvl2Archetypes;
-            RTArchetype2.DisplayMemberPath = "Name";
+            RTArchetype2.DisplayMemberPath = "Description.Name";
             RTArchetype2.Visibility = viewModel.Lvl2Archetypes.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
 
@@ -210,7 +210,7 @@ namespace W40KRogueTrader_BuildPlanner.View
         private void populateArchetype3Combobox()
         {
             RTArchetype3.ItemsSource = viewModel.Lvl3Archetypes;
-            RTArchetype3.DisplayMemberPath = "Name";
+            RTArchetype3.DisplayMemberPath = "Description.Name";
             RTArchetype3.Visibility = viewModel.Lvl3Archetypes.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
 
@@ -258,14 +258,14 @@ namespace W40KRogueTrader_BuildPlanner.View
                 return;
             }
 
-            ADescribable? describable = item.Content as ADescribable;
+            IDescribable? describable = item.Content as IDescribable;
 
             if (describable == null)
             {
                 return;
             }
 
-            viewModel.storeDescribable(describable);
+            viewModel.storeDescribable(describable.Description);
         }
 
         private void DescribableDGR_MouseMove(object sender, RoutedEventArgs e)
@@ -277,14 +277,14 @@ namespace W40KRogueTrader_BuildPlanner.View
                 return;
             }
 
-            ADescribable? describable = item.DataContext as ADescribable;
+            IDescribable? describable = item.DataContext as IDescribable;
 
             if (describable == null)
             {
                 return;
             }
 
-            viewModel.storeDescribable(describable);
+            viewModel.storeDescribable(describable.Description);
         }
         #endregion
     }

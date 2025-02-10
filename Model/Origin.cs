@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace W40KRogueTrader_BuildPlanner.Model
 {
-    public class Origin : ADescribable
+    public class Origin : IDescribable
     {
         public enum OriginId
         {
@@ -21,7 +21,7 @@ namespace W40KRogueTrader_BuildPlanner.Model
         }
 
         public OriginId Id { get; }
-
+        public Description Description { get; }
         public List<OriginArg>? PossibleArgs { get; }
 
         public List<DarkestHour>? PossibleDarkestHours { get; }
@@ -31,9 +31,10 @@ namespace W40KRogueTrader_BuildPlanner.Model
                       String description = "",
                       List<OriginArg>? possibleArgs = null,
                       List<Triumph>? possibleTriumphs = null,
-                      List<DarkestHour>? darkestHours = null) : base(Enum.GetName(id).Replace('_', ' '), description)
+                      List<DarkestHour>? darkestHours = null)
         {
             Id = id;
+            Description = new Description(Enum.GetName(Id).Replace('_', ' '), description);
             PossibleArgs = possibleArgs;
             PossibleTriumphs = possibleTriumphs;
             PossibleDarkestHours = darkestHours;

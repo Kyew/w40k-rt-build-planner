@@ -9,6 +9,6 @@
       Title="DescriptionView" Background="DarkOliveGreen">
 
     <StackPanel Margin="20">
-        <Label x:Name="DescribableName" Content="{Binding Describable.Name}"/>
+        <Label x:Name="DescribableName" Content="{Binding Description.Name}"/>
     </StackPanel>
 </Page>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace W40KRogueTrader_BuildPlanner.Model
 {
-    public class Skill : ADescribable
+    public class Skill : IDescribable
     {
         public enum SkillId
         {
@@ -26,11 +26,13 @@ namespace W40KRogueTrader_BuildPlanner.Model
         }
 
         public SkillId Id { get; }
+        public Description Description { get; }
         public Characteristic.CharacteristicId BaseCharacteristic { get; }
 
-        public Skill(SkillId id, String description, Characteristic.CharacteristicId baseCharacteristic) : base(Enum.GetName(id).Replace('_', ' '), description)
+        public Skill(SkillId id, String description, Characteristic.CharacteristicId baseCharacteristic)
         {
             Id = id;
+            Description = new Description(Enum.GetName(Id).Replace('_', ' '), description);
             BaseCharacteristic = baseCharacteristic;
         }
     }

@@ -23,15 +23,15 @@ namespace W40KRogueTrader_BuildPlanner.Repository
             }
         }
 
-        private ADescribable? describable;
-        public ADescribable? Describable
+        private Description? description;
+        public Description? Description
         {
-            get => describable;
+            get => description;
             set
             {
-                if (describable != value)
+                if (description != value)
                 {
-                    describable = value;
+                    description = value;
                     DescribableChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
@@ -41,7 +41,7 @@ namespace W40KRogueTrader_BuildPlanner.Repository
 
         private DescriptionRepository()
         {
-            Describable = null;
+            Description = null;
         }
     }
 }

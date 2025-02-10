@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace W40KRogueTrader_BuildPlanner.Model
 {
-    public class HomeWorldArg : ADescribable
+    public class HomeWorldArg : IDescribable
     {
-        public HomeWorldArg(String name = "", String description = "") : base(name, description)
+        public Description Description { get; }
+
+        public HomeWorldArg(String name = "", String description = "")
         {
+            Description = new Description(name, description);
         }
     }
 }

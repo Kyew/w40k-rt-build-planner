@@ -13,16 +13,18 @@ using W40KRogueTrader_BuildPlanner.Utils.Extensions;
 
 namespace W40KRogueTrader_BuildPlanner.ViewModel
 {
-    public class SkillUIO : ADescribable
+    public class SkillUIO : IDescribable
     {
         public Skill.SkillId Id { get; }
+        public Description Description { get; }
         public int BaseValue { get; }
         public int Modifiers { get; }
         public int TotalValue { get; }
 
-        public SkillUIO(Skill.SkillId id, String name, String description, int baseValue, int modifiers) : base(name, description)
+        public SkillUIO(Skill.SkillId id, Description description, int baseValue, int modifiers)
         {
             Id = id;
+            Description = description;
             BaseValue = baseValue;
             Modifiers = modifiers;
             TotalValue = baseValue + modifiers;
@@ -335,9 +337,9 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
          * Description
          ***/
         #region Description
-        public void storeDescribable(ADescribable describable)
+        public void storeDescribable(Description description)
         {
-            descriptionRepository.Describable = describable;
+            descriptionRepository.Description = description;
         }
         #endregion
 

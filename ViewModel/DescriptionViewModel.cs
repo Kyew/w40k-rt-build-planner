@@ -12,16 +12,16 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
     {
         private readonly DescriptionRepository descriptionRepository;
 
-        private ADescribable? describable;
-        public ADescribable? Describable
+        private Description? description;
+        public Description? Description
         {
-            get => describable;
+            get => description;
             private set
             {
-                if (describable != value)
+                if (description != value)
                 {
-                    describable = value;
-                    OnPropertyChanged("Describable");
+                    description = value;
+                    OnPropertyChanged("Description");
                 }
             }
         }
@@ -39,7 +39,7 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
 
         private void DescriptionRepository_DescribableChanged(object? sender, EventArgs e)
         {
-            Describable = descriptionRepository.Describable;
+            Description = descriptionRepository.Description;
         }
     }
 }
