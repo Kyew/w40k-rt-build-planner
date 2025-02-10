@@ -336,11 +336,24 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
          * Characteristics
          ***/
         #region Characteristics
-        private static readonly int NumberOfFreeCharacteristicsPoints = 30;
+        private static readonly int numberOfFreeCharacteristicsPoints = 30;
 
         public ObservableCollection<CharacteristicUIO> Characteristics { get; private set; } = new ObservableCollection<CharacteristicUIO>();
+
         public Dictionary<Characteristic.CharacteristicId, int> FreeCharacteristicsModifiers = new Dictionary<Characteristic.CharacteristicId, int>();
-        public int RemainingFreeCharacteristicsPoints { get; private set; } = NumberOfFreeCharacteristicsPoints;
+        private int remainingFreeCharacteristicsPoints = numberOfFreeCharacteristicsPoints;
+        public int RemainingFreeCharacteristicsPoints
+        {
+            get => remainingFreeCharacteristicsPoints;
+            private set
+            {
+                if (remainingFreeCharacteristicsPoints != value)
+                {
+                    remainingFreeCharacteristicsPoints = value;
+                    OnPropertyChanged("RemainingFreeCharacteristicsPoints");
+                }
+            }
+        }
 
         private void updateCharacteristics()
         {
@@ -375,7 +388,7 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
 
         public void retrieveFreePointsToCharacteristic(Characteristic.CharacteristicId characteristicId)
         {
-            if (RemainingFreeCharacteristicsPoints == NumberOfFreeCharacteristicsPoints)
+            if (RemainingFreeCharacteristicsPoints == numberOfFreeCharacteristicsPoints)
             {
                 return;
             }

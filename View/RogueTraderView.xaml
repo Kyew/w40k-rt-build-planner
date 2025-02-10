@@ -74,6 +74,10 @@
             </Grid>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="0, 20, 0, 0">
+            <Label Content="Remaining points: "/>
+            <Label Content="{Binding RemainingFreeCharacteristicsPoints}" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
             <DataGrid x:Name="CharacteristicsDG" AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="false" CanUserAddRows="false" Margin="10, 0, 10, 0" ItemContainerStyle="{StaticResource DescribableDG}">
                 <DataGrid.Resources>
                     <DataTemplate x:Key="EditCharacteristicTemplate">
