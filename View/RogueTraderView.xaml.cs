@@ -22,6 +22,8 @@ namespace W40KRogueTrader_BuildPlanner.View
     /// </summary>
     public partial class RogueTraderView : Page
     {
+        private RogueTraderViewModel viewModel;
+
         public RogueTraderView()
         {
             InitializeComponent();
@@ -30,27 +32,43 @@ namespace W40KRogueTrader_BuildPlanner.View
 
             populateHomeworldCombobox();
             RTHomeworld.SelectionChanged += RTHomeworld_SelectionChanged;
+
             populateHomeworldArgCombobox();
             RTHomeworldArg.SelectionChanged += RTHomeworldArg_SelectionChanged;
+            viewModel.HomeWorldArgs.CollectionChanged += HomeWorldArgs_CollectionChanged;
+
             populateOriginCombobox();
             RTOrigin.SelectionChanged += RTOrigin_SelectionChanged;
+
             populateOriginArgCombobox();
             RTOriginArg.SelectionChanged += RTOriginArg_SelectionChanged;
+            viewModel.OriginArgs.CollectionChanged += OriginArgs_CollectionChanged;
+
             populateTriumphCombobox();
             RTTriumph.SelectionChanged += RTTriumph_SelectionChanged;
+            viewModel.Triumphs.CollectionChanged += Triumphs_CollectionChanged;
+
             populateDarkestHourCombobox();
             RTDarkestHour.SelectionChanged += RTDarkestHour_SelectionChanged;
+            viewModel.DarkestHours.CollectionChanged += DarkestHours_CollectionChanged;
+
             populateArchetype1Combobox();
             RTArchetype1.SelectionChanged += RTArchetype1_SelectionChanged;
             populateArchetype2Combobox();
             RTArchetype2.SelectionChanged += RTArchetype2_SelectionChanged;
+            viewModel.Lvl2Archetypes.CollectionChanged += Lvl2Archetypes_CollectionChanged;
             populateArchetype3Combobox();
             RTArchetype3.SelectionChanged += RTArchetype3_SelectionChanged;
+            viewModel.Lvl3Archetypes.CollectionChanged += Lvl3Archetypes_CollectionChanged;
 
             populateCharacteristicsDG();
             populateSkillsDG();
         }
 
+        /***
+         * HomeWorld
+         ***/
+        #region HomeWorld
         private void populateHomeworldCombobox()
         {
             RTHomeworld.ItemsSource = viewModel.HomeWorlds;
@@ -59,30 +77,32 @@ namespace W40KRogueTrader_BuildPlanner.View
 
         private void populateHomeworldArgCombobox()
         {
-            if (viewModel.RTHomeWorld == null)
-            {
-                RTHomeworldArg.ItemsSource = null;
-                RTHomeworldArg.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                RTHomeworldArg.ItemsSource = viewModel.RTHomeWorld.PossibleArgs;
-                RTHomeworldArg.DisplayMemberPath = "Name";
-                RTHomeworldArg.Visibility = viewModel.RTHomeWorld.PossibleArgs != null ? Visibility.Visible : Visibility.Hidden;
-            }
+            RTHomeworldArg.ItemsSource = viewModel.HomeWorldArgs;
+            RTHomeworldArg.DisplayMemberPath = "Name";
+            RTHomeworldArg.Visibility = viewModel.HomeWorldArgs.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
 
         private void RTHomeworld_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             viewModel.RTHomeWorld = RTHomeworld.SelectedItem as HomeWorld;
             viewModel.RTHomeWorldArg = null;
-            populateHomeworldArgCombobox();
         }
+
         private void RTHomeworldArg_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             viewModel.RTHomeWorldArg = RTHomeworldArg.SelectedItem as HomeWorldArg;
         }
 
+        private void HomeWorldArgs_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            RTHomeworldArg.Visibility = viewModel.HomeWorldArgs.Count > 0 ? Visibility.Visible : Visibility.Hidden;
+        }
+        #endregion
+
+        /***
+         * Origin
+         ***/
+        #region Origin
         private void populateOriginCombobox()
         {
             RTOrigin.ItemsSource = viewModel.Origins;
@@ -91,25 +111,14 @@ namespace W40KRogueTrader_BuildPlanner.View
 
         private void populateOriginArgCombobox()
         {
-            if (viewModel.RTOrigin == null)
-            {
-                RTOriginArg.ItemsSource = null;
-                RTOriginArg.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                RTOriginArg.ItemsSource = viewModel.RTOrigin.PossibleArgs;
-                RTOriginArg.DisplayMemberPath = "Name";
-                RTOriginArg.Visibility = viewModel.RTOrigin.PossibleArgs == null ? Visibility.Hidden : Visibility.Visible;
-            }
+            RTOriginArg.ItemsSource = viewModel.OriginArgs;
+            RTOriginArg.DisplayMemberPath = "Name";
+            RTOriginArg.Visibility = viewModel.OriginArgs.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
         private void RTOrigin_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             viewModel.RTOrigin = RTOrigin.SelectedItem as Origin;
             viewModel.RTOriginArg = null;
-            populateOriginArgCombobox();
-            populateTriumphCombobox();
-            populateDarkestHourCombobox();
         }
 
         private void RTOriginArg_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -117,19 +126,21 @@ namespace W40KRogueTrader_BuildPlanner.View
             viewModel.RTOriginArg = RTOriginArg.SelectedItem as OriginArg;
         }
 
+        private void OriginArgs_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            RTOriginArg.Visibility = viewModel.OriginArgs.Count > 0 ? Visibility.Visible : Visibility.Hidden;
+        }
+        #endregion 
+
+        /***
+         * Triumph
+         ***/
+        #region Triumph
         private void populateTriumphCombobox()
         {
-            if (viewModel.RTOrigin == null)
-            {
-                RTTriumph.ItemsSource = null;
-                RTTriumph.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                RTTriumph.ItemsSource = viewModel.RTOrigin.PossibleTriumphs;
-                RTTriumph.DisplayMemberPath = "Name";
-                RTTriumph.Visibility = viewModel.RTOrigin.PossibleTriumphs == null ? Visibility.Hidden : Visibility.Visible;
-            }
+            RTTriumph.ItemsSource = viewModel.Triumphs;
+            RTTriumph.DisplayMemberPath = "Name";
+            RTTriumph.Visibility = viewModel.Triumphs.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
 
         private void RTTriumph_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -137,25 +148,38 @@ namespace W40KRogueTrader_BuildPlanner.View
             viewModel.RTTriumph = RTTriumph.SelectedItem as Triumph;
         }
 
+        private void Triumphs_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            RTTriumph.Visibility = viewModel.Triumphs.Count > 0 ? Visibility.Visible : Visibility.Hidden;
+        }
+        #endregion 
+
+        /***
+         * DarkestHour
+         ***/
+        #region DarkestHour
         private void populateDarkestHourCombobox()
         {
-            if (viewModel.RTOrigin == null)
-            {
-                RTDarkestHour.ItemsSource = null;
-                RTDarkestHour.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                RTDarkestHour.ItemsSource = viewModel.RTOrigin.PossibleDarkestHours;
-                RTDarkestHour.DisplayMemberPath = "Name";
-                RTDarkestHour.Visibility = viewModel.RTOrigin.PossibleDarkestHours == null ? Visibility.Hidden : Visibility.Visible;
-            }
+            RTDarkestHour.ItemsSource = viewModel.DarkestHours;
+            RTDarkestHour.DisplayMemberPath = "Name";
+            RTDarkestHour.Visibility = viewModel.DarkestHours.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
+
         private void RTDarkestHour_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             viewModel.RTDarkestHour = RTDarkestHour.SelectedItem as DarkestHour;
         }
 
+        private void DarkestHours_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            RTDarkestHour.Visibility = viewModel.DarkestHours.Count > 0 ? Visibility.Visible : Visibility.Hidden;
+        }
+        #endregion 
+
+        /***
+         * Archetypes
+         ***/
+        #region Archetypes
         private void populateArchetype1Combobox()
         {
             RTArchetype1.ItemsSource = viewModel.Lvl1Archetypes;
@@ -165,63 +189,66 @@ namespace W40KRogueTrader_BuildPlanner.View
         private void RTArchetype1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             viewModel.RTLvl1Archetype = RTArchetype1.SelectedItem as Archetype;
-            viewModel.RTLvl2Archetype = null;
-            viewModel.RTLvl3Archetype = null;
-            populateArchetype2Combobox();
-            populateArchetype3Combobox();
         }
 
         private void populateArchetype2Combobox()
         {
-            if (viewModel.RTLvl1Archetype == null)
-            {
-                RTArchetype2.ItemsSource = null;
-                RTArchetype2.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                RTArchetype2.ItemsSource = viewModel.RTLvl1Archetype.PossibleNextArchetypes;
-                RTArchetype2.DisplayMemberPath = "Name";
-                RTArchetype2.Visibility = Visibility.Visible;
-            }
+            RTArchetype2.ItemsSource = viewModel.Lvl2Archetypes;
+            RTArchetype2.DisplayMemberPath = "Name";
+            RTArchetype2.Visibility = viewModel.Lvl2Archetypes.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
 
         private void RTArchetype2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             viewModel.RTLvl2Archetype = RTArchetype2.SelectedItem as Archetype;
-            viewModel.RTLvl3Archetype = null;
-            populateArchetype3Combobox();
+        }
+        private void Lvl2Archetypes_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            RTArchetype2.Visibility = viewModel.Lvl2Archetypes.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
 
         private void populateArchetype3Combobox()
         {
-            if (viewModel.RTLvl2Archetype == null)
-            {
-                RTArchetype3.ItemsSource = null;
-                RTArchetype3.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                RTArchetype3.ItemsSource = viewModel.RTLvl2Archetype.PossibleNextArchetypes;
-                RTArchetype3.DisplayMemberPath = "Name";
-                RTArchetype3.Visibility = Visibility.Visible;
-            }
+            RTArchetype3.ItemsSource = viewModel.Lvl3Archetypes;
+            RTArchetype3.DisplayMemberPath = "Name";
+            RTArchetype3.Visibility = viewModel.Lvl3Archetypes.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
+
         private void RTArchetype3_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             viewModel.RTLvl3Archetype = RTArchetype3.SelectedItem as Archetype;
         }
 
+        private void Lvl3Archetypes_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            RTArchetype3.Visibility = viewModel.Lvl3Archetypes.Count > 0 ? Visibility.Visible : Visibility.Hidden;
+        }
+        #endregion
+
+        /***
+         * Characteristics
+         ***/
+        #region Characteristics
         private void populateCharacteristicsDG()
         {
             CharacteristicsDG.ItemsSource = viewModel.Characteristics;
         }
+        #endregion
 
+        /***
+         * Skills
+         ***/
+        #region Skills
         private void populateSkillsDG()
         {
             SkillsDG.ItemsSource = viewModel.Skills;
         }
+        #endregion
 
+        /***
+         * Descriptions
+         ***/
+        #region Descriptions
         private void DescribableCBI_MouseMove(object sender, RoutedEventArgs e)
         {
             ComboBoxItem? item = sender as ComboBoxItem;
@@ -259,7 +286,6 @@ namespace W40KRogueTrader_BuildPlanner.View
 
             viewModel.storeDescribable(describable);
         }
-
-        private RogueTraderViewModel viewModel;
+        #endregion
     }
 }

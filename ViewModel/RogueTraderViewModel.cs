@@ -32,14 +32,22 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
 
     public class RogueTraderViewModel : ViewModelBase
     {
+        /***
+         * Repositories
+         ***/
+        #region Repositories
         private readonly ArchetypeRepository archetypeRepository;
         private readonly CharacteristicsRepository characteristicsRepository;
         private readonly HomeWorldRepository homeWorldRepository;
         private readonly OriginRepository originRepository;
         private readonly SkillRepository skillRepository;
         private DescriptionRepository descriptionRepository;
+        #endregion
 
-
+        /***
+         * Name
+         ***/
+        #region Name
         private String rtName;
         public String RTName
         {
@@ -53,17 +61,95 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
             }
             get => rtName;
         }
+        #endregion
 
+        /***
+         * HomeWorld
+         ***/
+        #region HomeWorld
         public List<HomeWorld> HomeWorlds => homeWorldRepository.HomeWorlds;
 
-        public HomeWorld? RTHomeWorld { get; set; }
-        public HomeWorldArg? RTHomeWorldArg { get; set; }
+        private HomeWorld? rtHomeWorld;
+        public HomeWorld? RTHomeWorld
+        {
+            get => rtHomeWorld;
+            set
+            {
+                if (rtHomeWorld != value)
+                {
+                    rtHomeWorld = value;
+                    updateHomeWorldArgs();
+                }
+            }
+        }
+        private void updateHomeWorldArgs()
+        {
+            if (RTHomeWorld == null)
+            {
+                HomeWorldArgs.Clear();
+                return;
+            }
 
+            if (RTHomeWorld.PossibleArgs == null)
+            {
+                HomeWorldArgs.Clear();
+                return;
+            }
+
+            HomeWorldArgs.CopyFrom(RTHomeWorld.PossibleArgs);
+        }
+
+        public ObservableCollection<HomeWorldArg> HomeWorldArgs = new ObservableCollection<HomeWorldArg>();
+        public HomeWorldArg? RTHomeWorldArg { get; set; }
+        #endregion
+
+        /***
+         * Origin
+         ***/
+        #region Origin
         public List<Origin> Origins => originRepository.Origins;
 
-        public Origin? RTOrigin { get; set; }
+        private Origin? rtOrigin;
+        public Origin? RTOrigin
+        {
+            get => rtOrigin;
+            set
+            {
+                if (rtOrigin != value)
+                {
+                    rtOrigin = value;
+                    updateTriumphs();
+                    updateDarkestHours();
+                    updateOriginArgs();
+                }
+            }
+        }
+        public ObservableCollection<OriginArg> OriginArgs { get; private set; } = new ObservableCollection<OriginArg>();
         public OriginArg? RTOriginArg { get; set; }
 
+        private void updateOriginArgs()
+        {
+            if (RTOrigin == null)
+            {
+                OriginArgs.Clear();
+                return;
+            }
+
+            if (RTOrigin.PossibleArgs == null)
+            {
+                OriginArgs.Clear();
+                return;
+            }
+
+            OriginArgs.CopyFrom(RTOrigin.PossibleArgs);
+        }
+        #endregion
+
+        /***
+         * Triumph
+         ***/
+        #region Triumph
+        public ObservableCollection<Triumph> Triumphs { get; private set; } = new ObservableCollection<Triumph>();
         private Triumph? rtTriumph;
         public Triumph? RTTriumph
         {
@@ -77,6 +163,30 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
                 }
             }
         }
+
+        private void updateTriumphs()
+        {
+            if (RTOrigin == null)
+            {
+                Triumphs.Clear();
+                return;
+            }
+
+            if (RTOrigin.PossibleTriumphs == null)
+            {
+                Triumphs.Clear();
+                return;
+            }
+
+            Triumphs.CopyFrom(RTOrigin.PossibleTriumphs);
+        }
+        #endregion
+
+        /***
+         * DarkestHour
+         ***/
+        #region DarkestHour
+        public ObservableCollection<DarkestHour> DarkestHours { get; private set; } = new ObservableCollection<DarkestHour>();
         private DarkestHour? rtDarkestHour;
         public DarkestHour? RTDarkestHour
         {
@@ -91,22 +201,150 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
             }
         }
 
+        private void updateDarkestHours()
+        {
+            if (RTOrigin == null)
+            {
+                DarkestHours.Clear();
+                return;
+            }
+
+            if (RTOrigin.PossibleDarkestHours == null)
+            {
+                DarkestHours.Clear();
+                return;
+            }
+
+            DarkestHours.CopyFrom(RTOrigin.PossibleDarkestHours);
+        }
+        #endregion
+
+        /***
+         * Archetypes
+         ***/
+        #region Archetypes
         public List<Archetype> Lvl1Archetypes => archetypeRepository.Lvl1Archetypes;
-        public List<Archetype> Lvl2Archetypes => archetypeRepository.Lvl2Archetypes;
-        public List<Archetype> Lvl3Archetypes => archetypeRepository.Lvl3Archetypes;
+        public ObservableCollection<Archetype> Lvl2Archetypes { get; private set; } = new ObservableCollection<Archetype>();
+        public ObservableCollection<Archetype> Lvl3Archetypes { get; private set; } = new ObservableCollection<Archetype>();
 
-        public Archetype? RTLvl1Archetype { get; set; }
-        public Archetype? RTLvl2Archetype { get; set; }
-        public Archetype? RTLvl3Archetype { get; set; }
+        private Archetype? rtLvl1Archetype;
+        public Archetype? RTLvl1Archetype
+        {
+            get => rtLvl1Archetype;
+            set
+            {
+                if (rtLvl1Archetype != value)
+                {
+                    rtLvl1Archetype = value;
+                    RTLvl2Archetype = null;
+                    updateLvl2Archetypes();
+                }
+            }
+        }
 
-        public List<Characteristic> Characteristics => characteristicsRepository.Characteristics;
+        private Archetype? rtLvl2Archetype;
+        public Archetype? RTLvl2Archetype
+        {
+            get => rtLvl2Archetype;
+            set
+            {
+                if (rtLvl2Archetype != value)
+                {
+                    rtLvl2Archetype = value;
+                    RTLvl3Archetype = null;
+                    updateLvl3Archetypes();
+                }
+            }
+        }
+
+        public Archetype? RTLvl3Archetype { get; set; } 
+
+        private void updateLvl2Archetypes()
+        {
+            if (RTLvl1Archetype == null)
+            {
+                Lvl2Archetypes.Clear();
+                return;
+            }
+
+            if (RTLvl1Archetype.PossibleNextArchetypes == null)
+            {
+                Lvl2Archetypes.Clear();
+                return;
+            }
+
+            Lvl2Archetypes.CopyFrom(RTLvl1Archetype.PossibleNextArchetypes);
+        }
+
+        private void updateLvl3Archetypes()
+        {
+            if (RTLvl2Archetype == null)
+            {
+                Lvl3Archetypes.Clear();
+                return;
+            }
+
+            if (RTLvl2Archetype.PossibleNextArchetypes == null)
+            {
+                Lvl3Archetypes.Clear();
+                return;
+            }
+
+            Lvl3Archetypes.CopyFrom(RTLvl2Archetype.PossibleNextArchetypes);
+        }
+        #endregion
+
+        /***
+         * Characteristics
+         ***/
+        #region Characteristics
+        public ObservableCollection<Characteristic> Characteristics { get; private set; } = new ObservableCollection<Characteristic>();
+
+        private void updateCharacteristics()
+        {
+            Characteristics.CopyFrom(characteristicsRepository.Characteristics);
+        }
+        #endregion
+
+        /***
+         * Skills
+         ***/
+        #region Skills
         public ObservableCollection<SkillUIO> Skills { get; private set; } = new ObservableCollection<SkillUIO>();
 
+        private void updateSkills()
+        {
+            List<Skill> skills = skillRepository.Skills;
+            SkillUIOFactory factory = new SkillUIOFactory(skillRepository, characteristicsRepository);
+
+            List<SkillModifier> skillModifiers = new List<SkillModifier>();
+            if (RTTriumph != null)
+            {
+                skillModifiers.Add(RTTriumph.SkillModifier);
+            }
+            if (RTDarkestHour != null)
+            {
+                skillModifiers.Add(RTDarkestHour.SkillModifier);
+            }
+
+            Skills.CopyFrom(skills.Select(skill => factory.fromSkill(skill.Id, skillModifiers)).ToList());
+        }
+        #endregion
+
+        /***
+         * Description
+         ***/
+        #region Description
         public void storeDescribable(ADescribable describable)
         {
             descriptionRepository.Describable = describable;
         }
+        #endregion
 
+        /***
+         * Constructors
+         ***/
+        #region Constructors
         public RogueTraderViewModel() : this(ArchetypeRepository.Instance,
                                              CharacteristicsRepository.Instance,
                                              HomeWorldRepository.Instance,
@@ -130,24 +368,14 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
             this.descriptionRepository = descriptionRepository;
 
             updateSkills();
+            updateCharacteristics();
+            updateTriumphs();
+            updateDarkestHours();
+            updateOriginArgs();
+            updateHomeWorldArgs();
+            updateLvl2Archetypes();
+            updateLvl3Archetypes();
         }
-
-        private void updateSkills()
-        {
-            List<Skill> skills = skillRepository.Skills;
-            SkillUIOFactory factory = new SkillUIOFactory(skillRepository, characteristicsRepository);
-
-            List<SkillModifier> skillModifiers = new List<SkillModifier>();
-            if (RTTriumph != null)
-            {
-                skillModifiers.Add(RTTriumph.SkillModifier);
-            }
-            if (RTDarkestHour != null)
-            {
-                skillModifiers.Add(RTDarkestHour.SkillModifier);
-            }
-
-            Skills.CopyFrom(skills.Select(skill => factory.fromSkill(skill.Id, skillModifiers)).ToList());
-        }
+        #endregion
     }
 }
