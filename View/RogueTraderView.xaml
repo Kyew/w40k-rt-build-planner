@@ -85,7 +85,7 @@
                 </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Description.Name}"/>
-                    <DataGridTextColumn Binding="{Binding StartingValue}"/>
+                    <DataGridTextColumn Binding="{Binding TotalValue}"/>
                     <DataGridTemplateColumn CellTemplate="{StaticResource EditCharacteristicTemplate}"/>
                 </DataGrid.Columns>
             </DataGrid>

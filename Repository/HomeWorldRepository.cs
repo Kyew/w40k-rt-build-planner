@@ -27,20 +27,33 @@ namespace W40KRogueTrader_BuildPlanner.Repository
 
         private HomeWorldRepository()
         {
-            HomeWorlds = new List<HomeWorld> { new HomeWorld(HomeWorld.HomeWorldId.Death_World),
-                                               new HomeWorld(HomeWorld.HomeWorldId.Voidborn),
-                                               new HomeWorld(HomeWorld.HomeWorldId.Hive_World),
+            HomeWorlds = new List<HomeWorld> { new HomeWorld(HomeWorld.HomeWorldId.Death_World, "", null, new List<CharacteristicModifier>{ new CharacteristicModifier(Characteristic.CharacteristicId.Strength, 5),
+                                                                                                                                            new CharacteristicModifier(Characteristic.CharacteristicId.Thoughness, 5),
+                                                                                                                                            new CharacteristicModifier(Characteristic.CharacteristicId.Agility, 5),
+                                                                                                                                            new CharacteristicModifier(Characteristic.CharacteristicId.Intelligence, -5),
+                                                                                                                                            new CharacteristicModifier(Characteristic.CharacteristicId.Fellowship, -5)}),
+                                               new HomeWorld(HomeWorld.HomeWorldId.Voidborn, "", null, new List<CharacteristicModifier>{ new CharacteristicModifier(Characteristic.CharacteristicId.Willpower, 5),
+                                                                                                                                         new CharacteristicModifier(Characteristic.CharacteristicId.Intelligence, 5),
+                                                                                                                                         new CharacteristicModifier(Characteristic.CharacteristicId.Strength, -5)}),
+                                               new HomeWorld(HomeWorld.HomeWorldId.Hive_World, "", null, new List<CharacteristicModifier>{ new CharacteristicModifier(Characteristic.CharacteristicId.Fellowship, 5),
+                                                                                                                                           new CharacteristicModifier(Characteristic.CharacteristicId.Agility, 5),
+                                                                                                                                           new CharacteristicModifier(Characteristic.CharacteristicId.Willpower, -5)}),
                                                new HomeWorld(HomeWorld.HomeWorldId.Forge_World, "", new List<HomeWorldArg> { new HomeWorldArg("Analytic System"),
                                                                                                                              new HomeWorldArg("Locomotion System"),
-                                                                                                                             new HomeWorldArg("Subskin Armour") }),
-                                               new HomeWorld(HomeWorld.HomeWorldId.Imperial_World, "", new List<HomeWorldArg> { new HomeWorldArg("Humanity's Finest - Strength"),
-                                                                                                                                new HomeWorldArg("Humanity's Finest - Toughness"),
-                                                                                                                                new HomeWorldArg("Humanity's Finest - Agility"),
-                                                                                                                                new HomeWorldArg("Humanity's Finest - Intelligence"),
-                                                                                                                                new HomeWorldArg("Humanity's Finest - Perception"),
-                                                                                                                                new HomeWorldArg("Humanity's Finest - Willpower"),
-                                                                                                                                new HomeWorldArg("Humanity's Finest - Fellowship"),}),
-                                               new HomeWorld(HomeWorld.HomeWorldId.Fortress_World) };
+                                                                                                                             new HomeWorldArg("Subskin Armour") }
+                                                                                                  , new List<CharacteristicModifier>{ new CharacteristicModifier(Characteristic.CharacteristicId.Intelligence, 5),
+                                                                                                                                      new CharacteristicModifier(Characteristic.CharacteristicId.Thoughness, 5),
+                                                                                                                                      new CharacteristicModifier(Characteristic.CharacteristicId.Fellowship, -5)}),
+                                               new HomeWorld(HomeWorld.HomeWorldId.Imperial_World, "", new List<HomeWorldArg> { new HomeWorldArg("Humanity's Finest - Strength", "", new List<CharacteristicModifier> { new CharacteristicModifier(Characteristic.CharacteristicId.Strength, 10) }),
+                                                                                                                                new HomeWorldArg("Humanity's Finest - Toughness", "", new List<CharacteristicModifier> { new CharacteristicModifier(Characteristic.CharacteristicId.Thoughness, 10) }),
+                                                                                                                                new HomeWorldArg("Humanity's Finest - Agility", "", new List<CharacteristicModifier> { new CharacteristicModifier(Characteristic.CharacteristicId.Agility, 10) }),
+                                                                                                                                new HomeWorldArg("Humanity's Finest - Intelligence", "", new List<CharacteristicModifier> { new CharacteristicModifier(Characteristic.CharacteristicId.Intelligence, 10) }),
+                                                                                                                                new HomeWorldArg("Humanity's Finest - Perception", "", new List<CharacteristicModifier> { new CharacteristicModifier(Characteristic.CharacteristicId.Perception, 10) }),
+                                                                                                                                new HomeWorldArg("Humanity's Finest - Willpower", "", new List<CharacteristicModifier> { new CharacteristicModifier(Characteristic.CharacteristicId.Willpower, 10) }),
+                                                                                                                                new HomeWorldArg("Humanity's Finest - Fellowship", "", new List<CharacteristicModifier> { new CharacteristicModifier(Characteristic.CharacteristicId.Fellowship, 10) }),}),
+                                               new HomeWorld(HomeWorld.HomeWorldId.Fortress_World, "", null, new List<CharacteristicModifier>{ new CharacteristicModifier(Characteristic.CharacteristicId.Perception, 5),
+                                                                                                                                               new CharacteristicModifier(Characteristic.CharacteristicId.Willpower, 5),
+                                                                                                                                               new CharacteristicModifier(Characteristic.CharacteristicId.Fellowship, -5)})};
         }
     }
 }

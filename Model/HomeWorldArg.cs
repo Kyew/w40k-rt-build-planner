@@ -10,9 +10,12 @@ namespace W40KRogueTrader_BuildPlanner.Model
     {
         public Description Description { get; }
 
-        public HomeWorldArg(String name = "", String description = "")
+        public List<CharacteristicModifier>? CharacteristicModifiers { get; }
+
+        public HomeWorldArg(String name = "", String description = "", List<CharacteristicModifier>? modifiers = null)
         {
             Description = new Description(name, description);
+            CharacteristicModifiers = modifiers;
         }
     }
 }

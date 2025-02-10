@@ -13,13 +13,17 @@ using W40KRogueTrader_BuildPlanner.Utils.Extensions;
 
 namespace W40KRogueTrader_BuildPlanner.ViewModel
 {
+    /***
+     * SkillUIO
+     ***/
+    #region SkillUIO
     public class SkillUIO : IDescribable
     {
         public Skill.SkillId Id { get; }
         public Description Description { get; }
         public int BaseValue { get; }
         public int Modifiers { get; }
-        public int TotalValue { get; }
+        public int TotalValue => BaseValue + Modifiers;
 
         public SkillUIO(Skill.SkillId id, Description description, int baseValue, int modifiers)
         {
@@ -27,9 +31,28 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
             Description = description;
             BaseValue = baseValue;
             Modifiers = modifiers;
-            TotalValue = baseValue + modifiers;
         }
     }
+    #endregion
+
+    /***
+     * CharacteristicUIO
+     ***/
+    #region CharacteristicUIO
+    public class CharacteristicUIO : IDescribable
+    {
+        public Characteristic Characteristic { get; }
+        public Description Description => Characteristic.Description;
+        public int Modifiers { get; }
+        public int TotalValue => Characteristic.StartingValue + Modifiers;
+
+        public CharacteristicUIO(Characteristic characteristic, int modifiers)
+        {
+            Characteristic = characteristic;
+            Modifiers = modifiers;
+        }
+    }
+    #endregion
 
 
     public class RogueTraderViewModel : ViewModelBase
@@ -81,6 +104,7 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
                 {
                     rtHomeWorld = value;
                     updateHomeWorldArgs();
+                    updateCharacteristics();
                 }
             }
         }
@@ -102,7 +126,19 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
         }
 
         public ObservableCollection<HomeWorldArg> HomeWorldArgs = new ObservableCollection<HomeWorldArg>();
-        public HomeWorldArg? RTHomeWorldArg { get; set; }
+        private HomeWorldArg? rtHomeWorldArg;
+        public HomeWorldArg? RTHomeWorldArg
+        {
+            get => rtHomeWorldArg;
+            set
+            {
+                if (rtHomeWorldArg != value)
+                {
+                    rtHomeWorldArg = value;
+                    updateCharacteristics();
+                }
+            }
+        }
         #endregion
 
         /***
@@ -300,11 +336,13 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
          * Characteristics
          ***/
         #region Characteristics
-        public ObservableCollection<Characteristic> Characteristics { get; private set; } = new ObservableCollection<Characteristic>();
+        public ObservableCollection<CharacteristicUIO> Characteristics { get; private set; } = new ObservableCollection<CharacteristicUIO>();
 
         private void updateCharacteristics()
         {
-            Characteristics.CopyFrom(characteristicsRepository.Characteristics);
+            CharacteristicUIOFactory factory = new CharacteristicUIOFactory();
+
+            Characteristics.CopyFrom(characteristicsRepository.Characteristics.Select(characteristic => factory.fromCharateristic(characteristic, RTHomeWorld, RTHomeWorldArg)).ToList());
         }
         #endregion
 

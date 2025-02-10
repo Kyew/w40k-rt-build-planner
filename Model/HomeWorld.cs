@@ -21,12 +21,14 @@ namespace W40KRogueTrader_BuildPlanner.Model
         public HomeWorldId Id { get; }
         public Description Description { get; }
         public List<HomeWorldArg>? PossibleArgs { get; }
+        public List<CharacteristicModifier>? CharacteristicModifiers { get; }
 
-        public HomeWorld(HomeWorldId id, String description = "", List<HomeWorldArg>? args = null)
+        public HomeWorld(HomeWorldId id, String description = "", List<HomeWorldArg>? args = null, List<CharacteristicModifier>? characteristicModifiers = null)
         {
             Id = id;
             Description = new Description(Enum.GetName(Id).Replace('_', ' '), description);
             PossibleArgs = args;
+            CharacteristicModifiers = characteristicModifiers;
         }
 
     }
