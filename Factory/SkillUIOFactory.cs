@@ -11,41 +11,30 @@ namespace W40KRogueTrader_BuildPlanner.Factory
 {
     public sealed class SkillUIOFactory
     {
-        private readonly SkillRepository skillRepository;
-        private readonly CharacteristicsRepository characteristicsRepository;
-
-        public SkillUIOFactory(SkillRepository skillRepo, CharacteristicsRepository characteristicsRepository)
+        public SkillUIOFactory()
         {
-            this.skillRepository = skillRepo;
-            this.characteristicsRepository = characteristicsRepository;
         }
 
-        public SkillUIO fromSkill(Skill.SkillId skillId, List<SkillModifier> skillModifiers)
+        public SkillUIO fromSkill(Skill skill, List<SkillModifier> skillModifiers, List<CharacteristicUIO> characteristics)
         {
-            Skill? skill = skillRepository.Skills.Find(x => x.Id == skillId);
 
-            if (skill == null)
-            {
-                throw new Exception("Skill with id '" + skillId.ToString() + "' not found in repository");
-            }
-
-            Characteristic? charateristic = characteristicsRepository.Characteristics.Find(x => x.Id == skill.BaseCharacteristic);
+            CharacteristicUIO? charateristic = characteristics.Find(x => x.Characteristic.Id == skill.BaseCharacteristic);
 
             if (charateristic == null)
             {
-                throw new Exception("Characteristic with id '" + skill.BaseCharacteristic.ToString() + "' not found in repository");
+                throw new Exception("Characteristic with id '" + skill.BaseCharacteristic.ToString() + "' not found");
             }
 
             int totalModifier = 0;
             foreach (SkillModifier mod in skillModifiers)
             {
-                if (mod.Id == skillId)
+                if (mod.Id == skill.Id)
                 {
                     totalModifier += mod.Value;
                 }
             }
 
-            return new SkillUIO(skill.Id, skill.Description, charateristic.StartingValue, totalModifier);
+            return new SkillUIO(skill.Id, skill.Description, charateristic.TotalValue, totalModifier);
         }
     }
 }

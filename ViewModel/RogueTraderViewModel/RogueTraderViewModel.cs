@@ -72,7 +72,7 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.RogueTraderViewModel
                 {
                     rtHomeWorld = value;
                     updateHomeWorldArgs();
-                    updateCharacteristics();
+                    updateCharacteristicsAndSkills();
                 }
             }
         }
@@ -103,7 +103,7 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.RogueTraderViewModel
                 if (rtHomeWorldArg != value)
                 {
                     rtHomeWorldArg = value;
-                    updateCharacteristics();
+                    updateCharacteristicsAndSkills();
                 }
             }
         }
@@ -323,12 +323,13 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.RogueTraderViewModel
             }
         }
 
-        private void updateCharacteristics()
+        private void updateCharacteristicsAndSkills()
         {
             CharacteristicUIOFactory factory = new CharacteristicUIOFactory();
             List<CharacteristicModifier> freeModifiers = getAllocatedFreeCharacteristicModifiers();
 
             Characteristics.CopyFrom(characteristicsRepository.Characteristics.Select(characteristic => factory.fromCharateristic(characteristic, RTHomeWorld, RTHomeWorldArg, freeModifiers)).ToList());
+            updateSkills();
         }
 
         public void addFreePointsToCharacteristic(Characteristic.CharacteristicId characteristicId)
@@ -351,7 +352,7 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.RogueTraderViewModel
                 FreeCharacteristicsModifiers.Add(characteristicId, 5);
                 RemainingFreeCharacteristicsPoints -= 5;
             }
-            updateCharacteristics();
+            updateCharacteristicsAndSkills();
         }
 
         public void retrieveFreePointsToCharacteristic(Characteristic.CharacteristicId characteristicId)
@@ -369,7 +370,7 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.RogueTraderViewModel
                     RemainingFreeCharacteristicsPoints += 5;
                 }
             }
-            updateCharacteristics();
+            updateCharacteristicsAndSkills();
         }
 
         private List<CharacteristicModifier> getAllocatedFreeCharacteristicModifiers()
@@ -396,7 +397,7 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.RogueTraderViewModel
         private void updateSkills()
         {
             List<Skill> skills = skillRepository.Skills;
-            SkillUIOFactory factory = new SkillUIOFactory(skillRepository, characteristicsRepository);
+            SkillUIOFactory factory = new SkillUIOFactory();
 
             List<SkillModifier> skillModifiers = new List<SkillModifier>();
             if (RTTriumph != null)
@@ -408,7 +409,7 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.RogueTraderViewModel
                 skillModifiers.Add(RTDarkestHour.SkillModifier);
             }
 
-            Skills.CopyFrom(skills.Select(skill => factory.fromSkill(skill.Id, skillModifiers)).ToList());
+            Skills.CopyFrom(skills.Select(skill => factory.fromSkill(skill, skillModifiers, Characteristics.ToList())).ToList());
         }
         #endregion
 
@@ -449,8 +450,7 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.RogueTraderViewModel
             this.skillRepository = skillRepository;
             this.descriptionRepository = descriptionRepository;
 
-            updateSkills();
-            updateCharacteristics();
+            updateCharacteristicsAndSkills();
             updateTriumphs();
             updateDarkestHours();
             updateOriginArgs();
