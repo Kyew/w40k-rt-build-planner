@@ -14,7 +14,31 @@
         <Style x:Key="DescribableDG" TargetType="DataGridRow">
             <EventSetter Event="PreviewMouseMove" Handler="DescribableDGR_MouseMove" />
         </Style>
-        <Style x:Key="ColoredOnModifierDGC" TargetType="DataGridCell">
+        <Style x:Key="InvisibleSelectionDGC" TargetType="DataGridCell">
+            <Style.Triggers>
+                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                    <Setter Property="BorderBrush">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Transparent"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Foreground"
+                                Value="{DynamicResource
+                                       {x:Static SystemColors.ControlTextBrushKey}}"/>
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Transparent"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ColoredOnModifierDGC" TargetType="DataGridCell" BasedOn="{StaticResource InvisibleSelectionDGC}">
+            <Style.Triggers>
+                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="{Binding Foreground}"/>
+                </Trigger>
+            </Style.Triggers>
             <Setter Property="Foreground" Value="{Binding Foreground}"/>
         </Style>
     </Page.Resources>
@@ -91,14 +115,14 @@
                     </DataTemplate>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Description.Name}"/>
+                    <DataGridTextColumn Binding="{Binding Description.Name}" CellStyle="{StaticResource InvisibleSelectionDGC}"/>
                     <DataGridTextColumn Binding="{Binding TotalValue}" CellStyle="{StaticResource ColoredOnModifierDGC}"/>
-                    <DataGridTemplateColumn CellTemplate="{StaticResource EditCharacteristicTemplate}"/>
+                    <DataGridTemplateColumn CellTemplate="{StaticResource EditCharacteristicTemplate}" CellStyle="{StaticResource InvisibleSelectionDGC}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <DataGrid x:Name="SkillsDG" AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="false" CanUserAddRows="false" Margin="10, 0, 10, 0" ItemContainerStyle="{StaticResource DescribableDG}" IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Description.Name}"/>
+                    <DataGridTextColumn Binding="{Binding Description.Name}" CellStyle="{StaticResource InvisibleSelectionDGC}"/>
                     <DataGridTextColumn Binding="{Binding TotalValue}" CellStyle="{StaticResource ColoredOnModifierDGC}"/>
                 </DataGrid.Columns>
             </DataGrid>
