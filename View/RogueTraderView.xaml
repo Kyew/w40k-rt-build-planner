@@ -8,38 +8,14 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="RogueTraderView" Background="LightCyan">
     <Page.Resources>
-        <Style x:Key="DescribableCB" TargetType="ComboBoxItem">
+        <Style x:Key="DescribableCB" TargetType="ComboBox" >
+            <EventSetter Event="PreviewMouseMove" Handler="DescribableCB_MouseMove" />
+        </Style>
+        <Style x:Key="DescribableCBI" TargetType="ComboBoxItem">
             <EventSetter Event="PreviewMouseMove" Handler="DescribableCBI_MouseMove" />
         </Style>
-        <Style x:Key="DescribableDG" TargetType="DataGridRow">
+        <Style x:Key="DescribableDGR" TargetType="DataGridRow">
             <EventSetter Event="PreviewMouseMove" Handler="DescribableDGR_MouseMove" />
-        </Style>
-        <Style x:Key="InvisibleSelectionDGC" TargetType="DataGridCell">
-            <Style.Triggers>
-                <Trigger Property="DataGridCell.IsSelected" Value="True">
-                    <Setter Property="BorderBrush">
-                        <Setter.Value>
-                            <SolidColorBrush Color="Transparent"/>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="Foreground"
-                                Value="{DynamicResource
-                                       {x:Static SystemColors.ControlTextBrushKey}}"/>
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <SolidColorBrush Color="Transparent"/>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="ColoredOnModifierDGC" TargetType="DataGridCell" BasedOn="{StaticResource InvisibleSelectionDGC}">
-            <Style.Triggers>
-                <Trigger Property="DataGridCell.IsSelected" Value="True">
-                    <Setter Property="Foreground" Value="{Binding Foreground}"/>
-                </Trigger>
-            </Style.Triggers>
-            <Setter Property="Foreground" Value="{Binding Foreground}"/>
         </Style>
     </Page.Resources>
     <StackPanel Margin="20">
@@ -62,18 +38,18 @@
                 <TextBox Grid.Row="0" Grid.Column="1" x:Name="RTName" Text="{Binding Path=RTName}"/>
 
                 <Label Grid.Row="1" Grid.Column="0" Content="Home world"/>
-                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="RTHomeworld" ItemContainerStyle="{StaticResource DescribableCB}"></ComboBox>
-                <ComboBox Grid.Row="1" Grid.Column="2" x:Name="RTHomeworldArg" ItemContainerStyle="{StaticResource DescribableCB}"></ComboBox>
+                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="RTHomeworld" ItemContainerStyle="{StaticResource DescribableCBI}" Style="{StaticResource DescribableCB}"></ComboBox>
+                <ComboBox Grid.Row="1" Grid.Column="2" x:Name="RTHomeworldArg" ItemContainerStyle="{StaticResource DescribableCBI}" Style="{StaticResource DescribableCB}"></ComboBox>
 
                 <Label Grid.Row="2" Grid.Column="0" Content="Origin"/>
-                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="RTOrigin" ItemContainerStyle="{StaticResource DescribableCB}"></ComboBox>
-                <ComboBox Grid.Row="2" Grid.Column="2" x:Name="RTOriginArg" ItemContainerStyle="{StaticResource DescribableCB}"></ComboBox>
+                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="RTOrigin" ItemContainerStyle="{StaticResource DescribableCBI}" Style="{StaticResource DescribableCB}"></ComboBox>
+                <ComboBox Grid.Row="2" Grid.Column="2" x:Name="RTOriginArg" ItemContainerStyle="{StaticResource DescribableCBI}" Style="{StaticResource DescribableCB}"></ComboBox>
 
                 <Label Grid.Row="3" Grid.Column="0" Content="Triumph"/>
-                <ComboBox Grid.Row="3" Grid.Column="1" x:Name="RTTriumph" ItemContainerStyle="{StaticResource DescribableCB}"></ComboBox>
+                <ComboBox Grid.Row="3" Grid.Column="1" x:Name="RTTriumph" ItemContainerStyle="{StaticResource DescribableCBI}" Style="{StaticResource DescribableCB}"></ComboBox>
 
                 <Label Grid.Row="4" Grid.Column="0" Content="DarkestHour"/>
-                <ComboBox Grid.Row="4" Grid.Column="1" x:Name="RTDarkestHour" ItemContainerStyle="{StaticResource DescribableCB}"></ComboBox>
+                <ComboBox Grid.Row="4" Grid.Column="1" x:Name="RTDarkestHour" ItemContainerStyle="{StaticResource DescribableCBI}" Style="{StaticResource DescribableCB}"></ComboBox>
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -88,15 +64,15 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="0" Content="1st Archetype"/>
-                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="RTArchetype1" ItemContainerStyle="{StaticResource DescribableCB}"></ComboBox>
+                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="RTArchetype1" ItemContainerStyle="{StaticResource DescribableCBI}" Style="{StaticResource DescribableCB}"></ComboBox>
                 <Button Grid.Row="0" Grid.Column="2" x:Name="Arc1Edit" Content="Edit"/>
 
                 <Label Grid.Row="1" Grid.Column="0" Content="2nd Archetype"/>
-                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="RTArchetype2" ItemContainerStyle="{StaticResource DescribableCB}"></ComboBox>
+                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="RTArchetype2" ItemContainerStyle="{StaticResource DescribableCBI}" Style="{StaticResource DescribableCB}"></ComboBox>
                 <Button Grid.Row="1" Grid.Column="2" x:Name="Arc2Edit" Content="Edit"/>
 
                 <Label Grid.Row="2" Grid.Column="0" Content="3rd Archetype"/>
-                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="RTArchetype3" ItemContainerStyle="{StaticResource DescribableCB}"></ComboBox>
+                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="RTArchetype3" ItemContainerStyle="{StaticResource DescribableCBI}" Style="{StaticResource DescribableCB}"></ComboBox>
                 <Button Grid.Row="2" Grid.Column="2" x:Name="Arc3Edit" Content="Edit"/>
             </Grid>
         </StackPanel>
@@ -105,7 +81,7 @@
             <Label Content="{Binding RemainingFreeCharacteristicsPoints}" />
         </StackPanel>
         <StackPanel Orientation="Horizontal">
-            <DataGrid x:Name="CharacteristicsDG" AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="false" CanUserAddRows="false" Margin="10, 0, 10, 0" ItemContainerStyle="{StaticResource DescribableDG}" IsReadOnly="True">
+            <DataGrid x:Name="CharacteristicsDG" AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="false" CanUserAddRows="false" Margin="10, 0, 10, 0" ItemContainerStyle="{StaticResource DescribableDGR}" IsReadOnly="True">
                 <DataGrid.Resources>
                     <DataTemplate x:Key="EditCharacteristicTemplate">
                         <StackPanel Orientation="Horizontal">
@@ -120,7 +96,7 @@
                     <DataGridTemplateColumn CellTemplate="{StaticResource EditCharacteristicTemplate}" CellStyle="{StaticResource InvisibleSelectionDGC}"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <DataGrid x:Name="SkillsDG" AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="false" CanUserAddRows="false" Margin="10, 0, 10, 0" ItemContainerStyle="{StaticResource DescribableDG}" IsReadOnly="True">
+            <DataGrid x:Name="SkillsDG" AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="false" CanUserAddRows="false" Margin="10, 0, 10, 0" ItemContainerStyle="{StaticResource DescribableDGR}" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Description.Name}" CellStyle="{StaticResource InvisibleSelectionDGC}"/>
                     <DataGridTextColumn Binding="{Binding TotalValue}" CellStyle="{StaticResource ColoredOnModifierDGC}"/>

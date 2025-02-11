@@ -22,7 +22,7 @@ namespace W40KRogueTrader_BuildPlanner.Model
         public DarkestHour(DarkestHourId id, String description, SkillModifier skillModifier)
         {
             Id = id;
-            Description = new Description(Enum.GetName(Id).Replace('_', ' '), description);
+            Description = new Description(Enum.GetName(Id).Replace('_', ' '), description, new List<SkillModifier> { skillModifier });
             SkillModifier = skillModifier;
         }
     }

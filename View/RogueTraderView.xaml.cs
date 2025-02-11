@@ -287,6 +287,25 @@ namespace W40KRogueTrader_BuildPlanner.View
 
             viewModel.storeDescribable(describable.Description);
         }
+        private void DescribableCB_MouseMove(object sender, RoutedEventArgs e)
+        {
+            ComboBox? item = sender as ComboBox;
+
+            if (item == null)
+            {
+                return;
+            }
+
+            IDescribable? describable = item.SelectedItem as IDescribable;
+
+            if (describable == null)
+            {
+                return;
+            }
+
+            viewModel.storeDescribable(describable.Description);
+        }
+
 
         private void DescribableDGR_MouseMove(object sender, RoutedEventArgs e)
         {

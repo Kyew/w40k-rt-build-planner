@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:W40KRogueTrader_BuildPlanner"
              Startup="App_Startup">
     <Application.Resources>
+        <!-- Default font for all controls -->
         <FontFamily x:Key="Oxanium">
             pack://application:,,,/Fonts/#Oxanium Medium
         </FontFamily>
@@ -11,6 +12,9 @@
             <Setter Property="FontFamily" Value="{StaticResource Oxanium}"/>
         </Style>
         <Style TargetType="TextBox">
+            <Setter Property="FontFamily" Value="{StaticResource Oxanium}"/>
+        </Style>
+        <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="{StaticResource Oxanium}"/>
         </Style>
         <Style TargetType="Button">
@@ -21,6 +25,35 @@
         </Style>
         <Style TargetType="DataGrid">
             <Setter Property="FontFamily" Value="{StaticResource Oxanium}"/>
+        </Style>
+
+        <!-- Common styles DataGrids -->
+        <Style x:Key="InvisibleSelectionDGC" TargetType="DataGridCell">
+            <Style.Triggers>
+                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                    <Setter Property="BorderBrush">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Transparent"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Foreground"
+                        Value="{DynamicResource
+                               {x:Static SystemColors.ControlTextBrushKey}}"/>
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Transparent"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ColoredOnModifierDGC" TargetType="DataGridCell" BasedOn="{StaticResource InvisibleSelectionDGC}">
+            <Style.Triggers>
+                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="{Binding Foreground}"/>
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="Foreground" Value="{Binding Foreground}"/>
         </Style>
     </Application.Resources>
 </Application>

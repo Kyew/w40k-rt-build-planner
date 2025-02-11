@@ -27,7 +27,7 @@ namespace W40KRogueTrader_BuildPlanner.Repository
 
         private HomeWorldRepository()
         {
-            HomeWorlds = new List<HomeWorld> { new HomeWorld(HomeWorld.HomeWorldId.Death_World, "", null, new List<CharacteristicModifier>{ new CharacteristicModifier(Characteristic.CharacteristicId.Strength, 5),
+            HomeWorlds = new List<HomeWorld> { new HomeWorld(HomeWorld.HomeWorldId.Death_World, "You came from a death world.\nThere are a lot of deaths on death worlds. Like... a lot. So you're kind of use to it...\n\n\n\nSo you're kinda dark and cool I guess.", null, new List<CharacteristicModifier>{ new CharacteristicModifier(Characteristic.CharacteristicId.Strength, 5),
                                                                                                                                             new CharacteristicModifier(Characteristic.CharacteristicId.Thoughness, 5),
                                                                                                                                             new CharacteristicModifier(Characteristic.CharacteristicId.Agility, 5),
                                                                                                                                             new CharacteristicModifier(Characteristic.CharacteristicId.Intelligence, -5),

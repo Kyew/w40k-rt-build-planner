@@ -10,17 +10,16 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.RogueTraderViewModel
 {
     public class SkillUIO : IDescribable
     {
-        public Skill.SkillId Id { get; }
-        public Description Description { get; }
+        public Skill Skill { get; }
+        public Description Description => Skill.Description;
         public int BaseValue { get; }
         public int Modifiers { get; }
         public int TotalValue => BaseValue + Modifiers;
         public Brush Foreground { get; }
 
-        public SkillUIO(Skill.SkillId id, Description description, int baseValue, int modifiers)
+        public SkillUIO(Skill skill, int baseValue, int modifiers)
         {
-            Id = id;
-            Description = description;
+            Skill = skill;
             BaseValue = baseValue;
             Modifiers = modifiers;
 

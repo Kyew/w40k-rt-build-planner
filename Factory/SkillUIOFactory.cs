@@ -34,7 +34,7 @@ namespace W40KRogueTrader_BuildPlanner.Factory
                 }
             }
 
-            return new SkillUIO(skill.Id, skill.Description, charateristic.TotalValue, totalModifier);
+            return new SkillUIO(skill, charateristic.TotalValue, totalModifier);
         }
     }
 }
