@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using W40KRogueTrader_BuildPlanner.Factory;
 using W40KRogueTrader_BuildPlanner.Model;
 using W40KRogueTrader_BuildPlanner.Repository;
@@ -24,6 +25,7 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
         public int BaseValue { get; }
         public int Modifiers { get; }
         public int TotalValue => BaseValue + Modifiers;
+        public Brush Foreground { get; }
 
         public SkillUIO(Skill.SkillId id, Description description, int baseValue, int modifiers)
         {
@@ -31,6 +33,19 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
             Description = description;
             BaseValue = baseValue;
             Modifiers = modifiers;
+
+            if (Modifiers == 0)
+            {
+                Foreground = RogueTraderViewModel.NullModifierBrush;
+            }
+            else if (Modifiers > 0)
+            {
+                Foreground = RogueTraderViewModel.PositiveModifierBrush;
+            }
+            else
+            {
+                Foreground = RogueTraderViewModel.NegativeModifierBrush;
+            }
         }
     }
     #endregion
@@ -45,18 +60,42 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
         public Description Description => Characteristic.Description;
         public int Modifiers { get; }
         public int TotalValue => Characteristic.StartingValue + Modifiers;
+        public Brush Foreground { get; }
 
         public CharacteristicUIO(Characteristic characteristic, int modifiers)
         {
             Characteristic = characteristic;
             Modifiers = modifiers;
+
+            if (Modifiers == 0)
+            {
+                Foreground = RogueTraderViewModel.NullModifierBrush;
+            }
+            else if (Modifiers > 0)
+            {
+                Foreground = RogueTraderViewModel.PositiveModifierBrush;
+            }
+            else
+            {
+                Foreground = RogueTraderViewModel.NegativeModifierBrush;
+            }
         }
+
     }
     #endregion
 
 
     public class RogueTraderViewModel : ViewModelBase
     {
+        /***
+         * Brushes
+         ***/
+        #region Brushes
+        public static readonly Brush PositiveModifierBrush = Brushes.Green;
+        public static readonly Brush NegativeModifierBrush = Brushes.Red;
+        public static readonly Brush NullModifierBrush = Brushes.Black;
+        #endregion
+
         /***
          * Repositories
          ***/

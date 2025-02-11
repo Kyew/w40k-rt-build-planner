@@ -14,6 +14,9 @@
         <Style x:Key="DescribableDG" TargetType="DataGridRow">
             <EventSetter Event="PreviewMouseMove" Handler="DescribableDGR_MouseMove" />
         </Style>
+        <Style x:Key="ColoredOnModifierDGC" TargetType="DataGridCell">
+            <Setter Property="Foreground" Value="{Binding Foreground}"/>
+        </Style>
     </Page.Resources>
     <StackPanel Margin="20">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
@@ -89,14 +92,14 @@
                 </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Description.Name}"/>
-                    <DataGridTextColumn Binding="{Binding TotalValue}"/>
+                    <DataGridTextColumn Binding="{Binding TotalValue}" CellStyle="{StaticResource ColoredOnModifierDGC}"/>
                     <DataGridTemplateColumn CellTemplate="{StaticResource EditCharacteristicTemplate}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <DataGrid x:Name="SkillsDG" AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="false" CanUserAddRows="false" Margin="10, 0, 10, 0" ItemContainerStyle="{StaticResource DescribableDG}" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Description.Name}"/>
-                    <DataGridTextColumn Binding="{Binding TotalValue}"/>
+                    <DataGridTextColumn Binding="{Binding TotalValue}" CellStyle="{StaticResource ColoredOnModifierDGC}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
