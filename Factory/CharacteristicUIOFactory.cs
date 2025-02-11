@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using W40KRogueTrader_BuildPlanner.Model;
-using W40KRogueTrader_BuildPlanner.ViewModel;
+using W40KRogueTrader_BuildPlanner.ViewModel.RogueTraderViewModel;
 
 namespace W40KRogueTrader_BuildPlanner.Factory
 {

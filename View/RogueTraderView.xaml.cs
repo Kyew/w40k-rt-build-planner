@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using W40KRogueTrader_BuildPlanner.Model;
-using W40KRogueTrader_BuildPlanner.ViewModel;
+using W40KRogueTrader_BuildPlanner.ViewModel.RogueTraderViewModel;
 
 namespace W40KRogueTrader_BuildPlanner.View
 {

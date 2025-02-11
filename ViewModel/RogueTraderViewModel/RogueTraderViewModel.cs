@@ -12,79 +12,8 @@ using W40KRogueTrader_BuildPlanner.Repository;
 using W40KRogueTrader_BuildPlanner.Utils.Extensions;
 
 
-namespace W40KRogueTrader_BuildPlanner.ViewModel
+namespace W40KRogueTrader_BuildPlanner.ViewModel.RogueTraderViewModel
 {
-    /***
-     * SkillUIO
-     ***/
-    #region SkillUIO
-    public class SkillUIO : IDescribable
-    {
-        public Skill.SkillId Id { get; }
-        public Description Description { get; }
-        public int BaseValue { get; }
-        public int Modifiers { get; }
-        public int TotalValue => BaseValue + Modifiers;
-        public Brush Foreground { get; }
-
-        public SkillUIO(Skill.SkillId id, Description description, int baseValue, int modifiers)
-        {
-            Id = id;
-            Description = description;
-            BaseValue = baseValue;
-            Modifiers = modifiers;
-
-            if (Modifiers == 0)
-            {
-                Foreground = RogueTraderViewModel.NullModifierBrush;
-            }
-            else if (Modifiers > 0)
-            {
-                Foreground = RogueTraderViewModel.PositiveModifierBrush;
-            }
-            else
-            {
-                Foreground = RogueTraderViewModel.NegativeModifierBrush;
-            }
-        }
-    }
-    #endregion
-
-    /***
-     * CharacteristicUIO
-     ***/
-    #region CharacteristicUIO
-    public class CharacteristicUIO : IDescribable
-    {
-        public Characteristic Characteristic { get; }
-        public Description Description => Characteristic.Description;
-        public int Modifiers { get; }
-        public int TotalValue => Characteristic.StartingValue + Modifiers;
-        public Brush Foreground { get; }
-
-        public CharacteristicUIO(Characteristic characteristic, int modifiers)
-        {
-            Characteristic = characteristic;
-            Modifiers = modifiers;
-
-            if (Modifiers == 0)
-            {
-                Foreground = RogueTraderViewModel.NullModifierBrush;
-            }
-            else if (Modifiers > 0)
-            {
-                Foreground = RogueTraderViewModel.PositiveModifierBrush;
-            }
-            else
-            {
-                Foreground = RogueTraderViewModel.NegativeModifierBrush;
-            }
-        }
-
-    }
-    #endregion
-
-
     public class RogueTraderViewModel : ViewModelBase
     {
         /***
@@ -112,8 +41,8 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
          * Name
          ***/
         #region Name
-        private String rtName;
-        public String RTName
+        private string rtName;
+        public string RTName
         {
             set
             {
@@ -334,7 +263,7 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
             }
         }
 
-        public Archetype? RTLvl3Archetype { get; set; } 
+        public Archetype? RTLvl3Archetype { get; set; }
 
         private void updateLvl2Archetypes()
         {
@@ -502,7 +431,8 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel
                                              HomeWorldRepository.Instance,
                                              OriginRepository.Instance,
                                              SkillRepository.Instance,
-                                             DescriptionRepository.Instance) { }
+                                             DescriptionRepository.Instance)
+        { }
 
         public RogueTraderViewModel(ArchetypeRepository archetypeRepository,
                                     CharacteristicsRepository characteristicsRepository,
