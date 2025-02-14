@@ -26,7 +26,7 @@ namespace W40KRogueTrader_BuildPlanner.Model
         public HomeWorld(HomeWorldId id, String description = "", List<HomeWorldArg>? args = null, List<CharacteristicModifier>? characteristicModifiers = null)
         {
             Id = id;
-            Description = new Description(Enum.GetName(Id).Replace('_', ' '), description, null, characteristicModifiers);
+            Description = new Description(Id.ToString().Replace('_', ' '), description, null, characteristicModifiers);
             PossibleArgs = args;
         }
 

@@ -24,17 +24,45 @@ namespace W40KRogueTrader_BuildPlanner.Model
             Executioner,
             Exemplar
         }
+
+        public enum ArchetypeType
+        {
+            Base,
+            Intermediate,
+            Final
+        }
+
+        public int NumberOfLevels
+        {
+            get
+            {
+                switch(Type)
+                {
+                    case ArchetypeType.Base:
+                        return 15;
+                    case ArchetypeType.Intermediate:
+                        return 0;
+                    case ArchetypeType.Final:
+                        return 0;
+                    default:
+                        return 0;
+                }
+            }
+        }
         
         public ArchetypeId Id { get; }
+        public ArchetypeType Type { get; }
+        public List<ArchetypeLevel> Levels { get; }
         public List<Archetype>? PossibleNextArchetypes { get; }
 
         public Description Description { get; }
 
-        public Archetype(ArchetypeId id, String description = "", List<Archetype>? possibleNextArchetypes = null)
+        public Archetype(ArchetypeId id, ArchetypeType type, List<ArchetypeLevel> levels, String description = "", List<Archetype>? possibleNextArchetypes = null)
         {
             Id = id;
-            Description = new Description(Enum.GetName(Id).Replace('_', ' '), description);
-
+            Type = type;
+            Levels = levels;
+            Description = new Description(Id.ToString().Replace('_', ' '), description);
             PossibleNextArchetypes = possibleNextArchetypes;
         }
     }

@@ -22,7 +22,7 @@ namespace W40KRogueTrader_BuildPlanner.Model
         public Triumph(TriumphId id, String description, SkillModifier skillModifier)
         {
             Id = id;
-            Description = new Description(Enum.GetName(Id).Replace('_', ' '), description, new List<SkillModifier> { skillModifier });
+            Description = new Description(Id.ToString().Replace('_', ' '), description, new List<SkillModifier> { skillModifier });
             SkillModifier = skillModifier;
         }
     }

@@ -8,7 +8,7 @@
         Title="W40K Rogue Trader - Build Planner" Height="720" Width="1280">
     <DockPanel LastChildFill="True">
         <Rectangle DockPanel.Dock="Top" Fill="LightPink" Height="120" HorizontalAlignment="Stretch" />
-        <Frame DockPanel.Dock="Right" Source="DescriptionView.xaml" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="400"/>
-        <Frame DockPanel.Dock="Left" Source="RogueTraderView.xaml" VerticalAlignment="Stretch"/>
+        <Frame DockPanel.Dock="Right" Source="DescriptionView.xaml" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="400" NavigationUIVisibility="Hidden"/>
+        <Frame DockPanel.Dock="Left" Source="RogueTraderView.xaml" VerticalAlignment="Stretch" NavigationUIVisibility="Hidden"/>
     </DockPanel>
 </Window>

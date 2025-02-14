@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using W40KRogueTrader_BuildPlanner.Model;
 using W40KRogueTrader_BuildPlanner.ViewModel.RogueTraderViewModel;
+using W40KRogueTrader_BuildPlanner.ViewModel.ArchetypeViewModel;
 
 namespace W40KRogueTrader_BuildPlanner.View
 {
@@ -60,6 +61,7 @@ namespace W40KRogueTrader_BuildPlanner.View
             populateArchetype3Combobox();
             RTArchetype3.SelectionChanged += RTArchetype3_SelectionChanged;
             viewModel.Lvl3Archetypes.CollectionChanged += Lvl3Archetypes_CollectionChanged;
+            Arc1Edit.Click += Arc1Edit_Click;
 
             populateCharacteristicsDG();
             populateSkillsDG();
@@ -223,6 +225,15 @@ namespace W40KRogueTrader_BuildPlanner.View
         {
             RTArchetype3.Visibility = viewModel.Lvl3Archetypes.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
+
+        private void Arc1Edit_Click(object sender, RoutedEventArgs e)
+        {
+            if (viewModel.RTLvl1Archetype != null)
+            {
+                NavigationService.Navigate(new ArchetypeView(new ArchetypeViewModel(viewModel.RTLvl1Archetype)));
+            }
+        }
+
         #endregion
 
         /***

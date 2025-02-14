@@ -32,7 +32,7 @@ namespace W40KRogueTrader_BuildPlanner.Model
         public Skill(SkillId id, String description, Characteristic.CharacteristicId baseCharacteristic)
         {
             Id = id;
-            Description = new Description(Enum.GetName(Id).Replace('_', ' '), description);
+            Description = new Description(Id.ToString().Replace('_', ' '), description);
             BaseCharacteristic = baseCharacteristic;
         }
     }

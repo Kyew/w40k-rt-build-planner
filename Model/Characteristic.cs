@@ -28,7 +28,7 @@ namespace W40KRogueTrader_BuildPlanner.Model
         public Characteristic(CharacteristicId id, String description = "", int startingValue = 0)
         {
             Id = id;
-            Description = new Description(Enum.GetName(Id).Replace('_', ' '), description);
+            Description = new Description(Id.ToString().Replace('_', ' '), description);
             StartingValue = startingValue;
         }
     }
