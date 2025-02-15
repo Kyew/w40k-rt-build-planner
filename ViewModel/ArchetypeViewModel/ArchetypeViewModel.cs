@@ -25,6 +25,7 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.ArchetypeViewModel
         private SkillRepository skillRepository;
         private CharacteristicsRepository characteristicsRepository;
         private UltimateUpgradeRepository ultimateUpgradeRepository;
+        private DescriptionRepository descriptionRepository;
 
         public Archetype Archetype { get; }
 
@@ -85,15 +86,16 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.ArchetypeViewModel
 
         public ObservableCollection<ArchetypeLevelUIO> Levels { get; } = new ObservableCollection<ArchetypeLevelUIO>();
 
-        public ArchetypeViewModel(Archetype archetype) : this(AbilityRepository.Instance, TalentRepository.Instance, SkillRepository.Instance, CharacteristicsRepository.Instance, UltimateUpgradeRepository.Instance, archetype) { }
+        public ArchetypeViewModel(Archetype archetype) : this(AbilityRepository.Instance, TalentRepository.Instance, SkillRepository.Instance, CharacteristicsRepository.Instance, UltimateUpgradeRepository.Instance, DescriptionRepository.Instance, archetype) { }
 
-        public ArchetypeViewModel(AbilityRepository abilityRepository, TalentRepository talentRepository, SkillRepository skillRepository, CharacteristicsRepository characteristicsRepository, UltimateUpgradeRepository ultimateUpgradeRepository, Archetype archetype)
+        public ArchetypeViewModel(AbilityRepository abilityRepository, TalentRepository talentRepository, SkillRepository skillRepository, CharacteristicsRepository characteristicsRepository, UltimateUpgradeRepository ultimateUpgradeRepository, DescriptionRepository descriptionRepository, Archetype archetype)
         {
             this.abilityRepository = abilityRepository;
             this.talentRepository = talentRepository;
             this.skillRepository = skillRepository;
             this.characteristicsRepository = characteristicsRepository;
             this.ultimateUpgradeRepository = ultimateUpgradeRepository;
+            this.descriptionRepository = descriptionRepository;
             Archetype = archetype;
 
             updateLevels();
@@ -103,7 +105,17 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.ArchetypeViewModel
         {
             ArchetypeLevelUIOFactory factory = new ArchetypeLevelUIOFactory();
 
-            Levels.CopyFrom(Archetype.Levels.Select(level => factory.fromArchetypeLevel(level)).ToList());
+            Levels.CopyFrom(Archetype.Levels.Select(level => factory.fromArchetypeLevel(level, Archetype)).ToList());
         }
+
+        /***
+         * Description
+         ***/
+        #region Description
+        public void storeDescribable(Description description)
+        {
+            descriptionRepository.Description = description;
+        }
+        #endregion
     }
 }

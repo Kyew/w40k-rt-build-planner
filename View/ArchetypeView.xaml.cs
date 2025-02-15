@@ -83,5 +83,71 @@ namespace W40KRogueTrader_BuildPlanner.View
         {
             LevelsDG.ItemsSource = viewModel.Levels;
         }
+
+        /***
+         * Descriptions
+         ***/
+        #region Descriptions
+        private void DescribableDGC_MouseMove(object sender, RoutedEventArgs e)
+        {
+            DataGridCell? item = sender as DataGridCell;
+
+            if (item == null)
+            {
+                return;
+            }
+
+            ArchetypeLevelUIO? archetypeLevelUIO = item.DataContext as ArchetypeLevelUIO;
+
+            if (archetypeLevelUIO == null)
+            {
+                return;
+            }
+
+            IDescribable? describable;
+
+            switch(item.Column.DisplayIndex)
+            {
+                case 0:
+                    describable = archetypeLevelUIO.Perk1;
+                    break;
+                case 1:
+                    describable = archetypeLevelUIO.Perk2;
+                    break;
+                case 2:
+                    describable = archetypeLevelUIO.Perk3;
+                    break;
+                default:
+                    describable = null;
+                    break;
+            }
+
+            if (describable == null)
+            {
+                return;
+            }
+
+            viewModel.storeDescribable(describable.Description);
+        }
+
+        private void DescribableLVI_MouseMove(object sender, RoutedEventArgs e)
+        {
+            ListViewItem? item = sender as ListViewItem;
+
+            if (item == null)
+            {
+                return;
+            }
+
+            IDescribable? describable = item.DataContext as IDescribable;
+
+            if (describable == null)
+            {
+                return;
+            }
+
+            viewModel.storeDescribable(describable.Description);
+        }
+        #endregion
     }
 }

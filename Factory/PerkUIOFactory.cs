@@ -21,7 +21,7 @@ namespace W40KRogueTrader_BuildPlanner.Factory
         private AbilityRepository abilityRepository;
         private SkillRepository skillRepository;
         private CharacteristicsRepository characteristicsRepository;
-        private UltimateUpgradeRepository utimateUpgradeRepository;
+        private UltimateUpgradeRepository ultimateUpgradeRepository;
 
         public PerkUIOFactory() : this(TalentRepository.Instance, AbilityRepository.Instance, SkillRepository.Instance, CharacteristicsRepository.Instance, UltimateUpgradeRepository.Instance)
         {
@@ -33,13 +33,14 @@ namespace W40KRogueTrader_BuildPlanner.Factory
             this.abilityRepository = abilityRepository;
             this.skillRepository = skillRepository;
             this.characteristicsRepository = characteristicsRepository;
-            this.utimateUpgradeRepository = ultimateUpgradeRepository;
+            this.ultimateUpgradeRepository = ultimateUpgradeRepository;
         }
 
-        public PerkUIO fromPerk(Perk perk)
+        public PerkUIO fromPerk(Perk perk, Archetype archetype)
         {
             object? id;
             String? text;
+            Description? description = null;
 
             switch (perk.Type)
             {
@@ -49,19 +50,24 @@ namespace W40KRogueTrader_BuildPlanner.Factory
                     break;
                 case Perk.PerkType.Ability:
                     id = perk.AbilityId;
+                    description = abilityRepository.Abilities.Find(ability => ability.Id == perk.AbilityId)?.Description;
                     break;
                 case Perk.PerkType.Talent:
                 case Perk.PerkType.CommonTalent:
                     id = perk.TalentId;
+                    description = talentRepository.AllTalents.Find(talent => talent.Id == perk.TalentId)?.Description;
                     break;
                 case Perk.PerkType.SkillUpgrade:
                     id = perk.SkillId;
+                    description = skillRepository.Skills.Find(skill => skill.Id == perk.SkillId)?.Description;
                     break;
                 case Perk.PerkType.CharacteristicUpgrade:
                     id = perk.CharacteristicId;
+                    description = characteristicsRepository.Characteristics.Find(characteristic => characteristic.Id == perk.CharacteristicId)?.Description;
                     break;
                 case Perk.PerkType.UltimateUpgrade:
                     id = perk.UltimateUpgradeId;
+                    description = ultimateUpgradeRepository.UltimateUpgrades[archetype.Id]?.Find(upgrade => upgrade.Id == perk.UltimateUpgradeId)?.Description;
                     break;
                 default:
                     id = null;
@@ -78,7 +84,7 @@ namespace W40KRogueTrader_BuildPlanner.Factory
                 text = "Select " + perk.Type.ToString() + "...";
             }
 
-            return new PerkUIO(id, text == null ? "" : text, perk.Type, perk.IsEditable);
+            return new PerkUIO(id, description, text == null ? "" : text, perk.Type, perk.IsEditable);
         }
     }
 }

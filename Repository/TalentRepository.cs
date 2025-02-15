@@ -28,6 +28,8 @@ namespace W40KRogueTrader_BuildPlanner.Repository
         public Dictionary<Origin.OriginId, List<Talent>> OriginTalents = new Dictionary<Origin.OriginId, List<Talent>>();
         public Dictionary<HomeWorld.HomeWorldId, List<Talent>> HomeWorldTalents = new Dictionary<HomeWorld.HomeWorldId, List<Talent>>();
 
+        public List<Talent> AllTalents { get; private set; } = new List<Talent>();
+
         public TalentRepository()
         {
             initCommonTalents();
@@ -44,6 +46,8 @@ namespace W40KRogueTrader_BuildPlanner.Repository
         {
             CommonTalents.Add(new Talent(Talent.TalentId.Common_SwiftMovements,"Swift Movements", "Grants +2 movement points."));
             CommonTalents.Add(new Talent(Talent.TalentId.Common_BaseSkillAthletics, "Base Skill: Athletics", "", new List<SkillModifier> { new SkillModifier(Skill.SkillId.Athletics, 7) }));
+
+            AllTalents.AddRange(CommonTalents);
         }
         #endregion
 
@@ -56,9 +60,14 @@ namespace W40KRogueTrader_BuildPlanner.Repository
             OriginTalents.Add(Origin.OriginId.Astra_Militarum_Commander, new List<Talent>());
             OriginTalents[Origin.OriginId.Astra_Militarum_Commander].Add(new Talent(Talent.TalentId.AMC_FieldOfFire, "Field of Fire", "", null, null, null, Origin.OriginId.Astra_Militarum_Commander));
             OriginTalents[Origin.OriginId.Astra_Militarum_Commander].Add(new Talent(Talent.TalentId.AMC_ShouldToShoulder, "Shoulder to Shoulder", "", null, null, null, Origin.OriginId.Astra_Militarum_Commander));
+
+            AllTalents.AddRange(OriginTalents[Origin.OriginId.Astra_Militarum_Commander]);
+
             OriginTalents.Add(Origin.OriginId.Comissar, new List<Talent>());
             OriginTalents[Origin.OriginId.Comissar].Add(new Talent(Talent.TalentId.Com_Motivation, "Motivation", "", null, null, null, Origin.OriginId.Comissar));
             OriginTalents[Origin.OriginId.Comissar].Add(new Talent(Talent.TalentId.Com_DutyAndHonour, "Duty and Honour !", "", null, null, null, Origin.OriginId.Comissar));
+
+            AllTalents.AddRange(OriginTalents[Origin.OriginId.Comissar]);
         }
         #endregion
 
@@ -70,6 +79,8 @@ namespace W40KRogueTrader_BuildPlanner.Repository
         {
             HomeWorldTalents.Add(HomeWorld.HomeWorldId.Death_World, new List<Talent>());
             HomeWorldTalents[HomeWorld.HomeWorldId.Death_World].Add(new Talent(Talent.TalentId.DW_BrutalHunter, "Brutal Hunter", "", null, null, HomeWorld.HomeWorldId.Death_World));
+
+            AllTalents.AddRange(HomeWorldTalents[HomeWorld.HomeWorldId.Death_World]);
         }
         #endregion
 
@@ -88,6 +99,8 @@ namespace W40KRogueTrader_BuildPlanner.Repository
             ArchetypeTalents[Archetype.ArchetypeId.Warrior].Add(new Talent(Talent.TalentId.War_Impetus, "Impetus", "", null, null, null, null, Archetype.ArchetypeId.Warrior));
             ArchetypeTalents[Archetype.ArchetypeId.Warrior].Add(new Talent(Talent.TalentId.War_RammingSpeed, "Ramming Speed", "", null, null, null, null, Archetype.ArchetypeId.Warrior));
             ArchetypeTalents[Archetype.ArchetypeId.Warrior].Add(new Talent(Talent.TalentId.War_RigorousTraining, "Rigorous Training", "", null, null, null, null, Archetype.ArchetypeId.Warrior));
+
+            AllTalents.AddRange(ArchetypeTalents[Archetype.ArchetypeId.Warrior]);
         }
         #endregion
     }

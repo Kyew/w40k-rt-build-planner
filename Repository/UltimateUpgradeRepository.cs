@@ -23,11 +23,13 @@ namespace W40KRogueTrader_BuildPlanner.Repository
             }
         }
 
-        public Dictionary<Archetype.ArchetypeType, List<UltimateUpgrade>> UltimateUpgrades;
+        public Dictionary<Archetype.ArchetypeId, List<UltimateUpgrade>> UltimateUpgrades;
 
         public UltimateUpgradeRepository()
         {
-            UltimateUpgrades = new Dictionary<Archetype.ArchetypeType, List<UltimateUpgrade>>();
+            UltimateUpgrades = new Dictionary<Archetype.ArchetypeId, List<UltimateUpgrade>>();
+
+            UltimateUpgrades.Add(Archetype.ArchetypeId.Warrior, new List<UltimateUpgrade>());
         }
     }
 }

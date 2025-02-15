@@ -7,20 +7,27 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ArchetypeView" Background="LightSeaGreen">
-
+    <Page.Resources>
+        <Style x:Key="DescribableDGC" TargetType="DataGridCell">
+            <EventSetter Event="PreviewMouseMove" Handler="DescribableDGC_MouseMove" />
+        </Style>
+        <Style x:Key="DescribableLVI" TargetType="ListViewItem">
+            <EventSetter Event="PreviewMouseMove" Handler="DescribableLVI_MouseMove" />
+        </Style>
+    </Page.Resources>
     <DockPanel Margin="20">
         <Button DockPanel.Dock="Right" x:Name="BackButton" Content="Back" VerticalAlignment="Top"/>
         <StackPanel DockPanel.Dock="Left">
             <Label Content="{Binding Archetype.Description.Name}" />
             <DockPanel>
-                <DataGrid DockPanel.Dock="Left" x:Name="LevelsDG" AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="false" CanUserAddRows="false" Margin="10, 0, 10, 0" IsReadOnly="True" SelectionUnit="Cell">
+                <DataGrid DockPanel.Dock="Left" x:Name="LevelsDG" AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="false" CanUserAddRows="false" Margin="10, 0, 10, 0" IsReadOnly="True" SelectionUnit="Cell"  CellStyle="{StaticResource DescribableDGC}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Perk1.Text}" />
                         <DataGridTextColumn Binding="{Binding Perk2.Text}" />
                         <DataGridTextColumn Binding="{Binding Perk3.Text}" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <ListView DockPanel.Dock="Right" x:Name="PerkChoices" Width="250" HorizontalAlignment="Right">
+                <ListView DockPanel.Dock="Right" x:Name="PerkChoices" Width="250" HorizontalAlignment="Right" ItemContainerStyle="{StaticResource DescribableLVI}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding Description.Name}" />

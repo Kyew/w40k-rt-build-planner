@@ -7,10 +7,12 @@ using W40KRogueTrader_BuildPlanner.Model;
 
 namespace W40KRogueTrader_BuildPlanner.ViewModel.ArchetypeViewModel
 {
-    public class PerkUIO
+    public class PerkUIO : IDescribable
     {
         private object? id;
 
+        private Description? description;
+        public Description Description => description == null ? new Description(Text, "") : description;
         public Perk.PerkType Type { get; }
         public String Text { get; }
         public bool IsEditable { get; }
@@ -45,7 +47,7 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.ArchetypeViewModel
         public Characteristic.CharacteristicId? CharacteristicId => id as Characteristic.CharacteristicId?;
         public UltimateUpgrade.UpgradeId? UltimateUpgradeId => id as UltimateUpgrade.UpgradeId?;
 
-        public PerkUIO(object? id, String text, Perk.PerkType type, bool isEditable)
+        public PerkUIO(object? id, Description? description, String text, Perk.PerkType type, bool isEditable)
         {
             this.id = id;
             Type = type;
