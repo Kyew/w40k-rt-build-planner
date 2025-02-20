@@ -49,11 +49,14 @@ namespace W40KRogueTrader_BuildPlanner.View
 
             PerkUIO? perk;
             ArchetypeLevelUIO? level = e.AddedCells[0].Item as ArchetypeLevelUIO;
-
+            
             if (level == null)
             {
                 return;
             }
+
+            int row = LevelsDG.Items.IndexOf(e.AddedCells[0].Item);
+            int col = e.AddedCells[0].Column.DisplayIndex;
 
             switch (e.AddedCells[0].Column.DisplayIndex)
             {
@@ -71,7 +74,10 @@ namespace W40KRogueTrader_BuildPlanner.View
                     break;
             }
 
-            viewModel.SelectedPerk = perk;
+            if (perk != null)
+            {
+                viewModel.SelectedPerk = new SelectedPerkUIO(row, col, perk);
+            }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -82,6 +88,23 @@ namespace W40KRogueTrader_BuildPlanner.View
         private void populateLevelsDG()
         {
             LevelsDG.ItemsSource = viewModel.Levels;
+        }
+
+        private void PerkChoices_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count == 0)
+            {
+                return;
+            }
+            
+            IDescribable? perkOption = e.AddedItems[0] as IDescribable;
+
+            if (perkOption == null)
+            {
+                return;
+            }
+
+            viewModel.SelectPerkOption(perkOption);
         }
 
         /***
@@ -127,7 +150,7 @@ namespace W40KRogueTrader_BuildPlanner.View
                 return;
             }
 
-            viewModel.storeDescribable(describable.Description);
+            viewModel.StoreDescribable(describable.Description);
         }
 
         private void DescribableLVI_MouseMove(object sender, RoutedEventArgs e)
@@ -146,7 +169,7 @@ namespace W40KRogueTrader_BuildPlanner.View
                 return;
             }
 
-            viewModel.storeDescribable(describable.Description);
+            viewModel.StoreDescribable(describable.Description);
         }
         #endregion
     }

@@ -16,7 +16,7 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.ArchetypeViewModel
         public Perk.PerkType Type { get; }
         public String Text { get; }
         public bool IsEditable { get; }
-        public bool isEmpty
+        public bool IsEmpty
         {
             get
             {
@@ -55,5 +55,11 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.ArchetypeViewModel
             Text = text;
         }
 
+        public PerkUIO Clone()
+        {
+            PerkUIO perk = new PerkUIO(id, Description, Text, Type, IsEditable);
+
+            return perk;
+        }
     }
 }

@@ -17,6 +17,7 @@ using static W40KRogueTrader_BuildPlanner.Model.Talent;
 namespace W40KRogueTrader_BuildPlanner.ViewModel.ArchetypeViewModel
 {
     public record ArchetypeLevelUIO(PerkUIO Perk1, PerkUIO? Perk2, PerkUIO? Perk3);
+    public record SelectedPerkUIO(int Row, int Col, PerkUIO Perk);
 
     public class ArchetypeViewModel : ViewModelBase
     {
@@ -29,8 +30,8 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.ArchetypeViewModel
 
         public Archetype Archetype { get; }
 
-        private PerkUIO? selectedPerk;
-        public PerkUIO? SelectedPerk
+        private SelectedPerkUIO? selectedPerk;
+        public SelectedPerkUIO? SelectedPerk
         {
             get => selectedPerk;
             set
@@ -54,12 +55,12 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.ArchetypeViewModel
                 return;
             }
 
-            if (!selectedPerk.IsEditable)
+            if (!selectedPerk.Perk.IsEditable)
             {
                 return;
             }
 
-            switch (selectedPerk.Type)
+            switch (selectedPerk.Perk.Type)
             {
                 case Perk.PerkType.Ability:
                     SelectedPerkOptions.CopyFrom(abilityRepository.Abilities.FindAll(ability => ability.ArchetypeId == Archetype.Id).ConvertAll<IDescribable>(x => (IDescribable)x));
@@ -84,6 +85,65 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.ArchetypeViewModel
             }
         }
 
+        public void SelectPerkOption(IDescribable perkOption)
+        {
+            if (SelectedPerk == null)
+            {
+                return;
+            }
+
+            if (!SelectedPerk.Perk.IsEditable)
+            {
+                return;
+            }
+
+            PerkUIO newPerk;
+
+            switch (perkOption)
+            {
+                case Ability ability:
+                    newPerk = new PerkUIO(ability.Id, ability.Description, ability.Id.ToString(), Perk.PerkType.Ability, true);
+                    break;
+                case Skill skill:
+                    newPerk = new PerkUIO(skill.Id, skill.Description, skill.Id.ToString(), Perk.PerkType.SkillUpgrade, true);
+                    break;
+                case Characteristic characteristic:
+                    newPerk = new PerkUIO(characteristic.Id, characteristic.Description, characteristic.Id.ToString(), Perk.PerkType.CharacteristicUpgrade, true);
+                    break;
+                case Talent talent:
+                    newPerk = new PerkUIO(talent.Id, talent.Description, talent.Id.ToString(), SelectedPerk.Perk.Type, true);
+                    break;
+                case UltimateUpgrade ultimateUpgrade:
+                    newPerk = new PerkUIO(ultimateUpgrade.Id, ultimateUpgrade.Description, ultimateUpgrade.Id.ToString(), Perk.PerkType.UltimateUpgrade, true);
+                    break;
+                default:
+                    newPerk = SelectedPerk.Perk;
+                    break;
+            }
+
+            ArchetypeLevelUIO level = Levels[SelectedPerk.Row];
+            ArchetypeLevelUIO newLevel;
+
+            switch (SelectedPerk.Col)
+            {
+                case 0:
+                    newLevel = new ArchetypeLevelUIO(newPerk, level.Perk2, level.Perk3);
+                    break;
+                case 1:
+                    newLevel = new ArchetypeLevelUIO(level.Perk1, newPerk, level.Perk3);
+                    break;
+                case 2:
+                    newLevel = new ArchetypeLevelUIO(level.Perk1, level.Perk2, newPerk);
+                    break;
+                default:
+                    newLevel = level;
+                    break;
+            }
+
+            Levels.RemoveAt(SelectedPerk.Row);
+            Levels.Insert(SelectedPerk.Row, newLevel);
+        }
+
         public ObservableCollection<ArchetypeLevelUIO> Levels { get; } = new ObservableCollection<ArchetypeLevelUIO>();
 
         public ArchetypeViewModel(Archetype archetype) : this(AbilityRepository.Instance, TalentRepository.Instance, SkillRepository.Instance, CharacteristicsRepository.Instance, UltimateUpgradeRepository.Instance, DescriptionRepository.Instance, archetype) { }
@@ -98,10 +158,10 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.ArchetypeViewModel
             this.descriptionRepository = descriptionRepository;
             Archetype = archetype;
 
-            updateLevels();
+            UpdateLevels();
         }
 
-        private void updateLevels()
+        private void UpdateLevels()
         {
             ArchetypeLevelUIOFactory factory = new ArchetypeLevelUIOFactory();
 
@@ -112,7 +172,7 @@ namespace W40KRogueTrader_BuildPlanner.ViewModel.ArchetypeViewModel
          * Description
          ***/
         #region Description
-        public void storeDescribable(Description description)
+        public void StoreDescribable(Description description)
         {
             descriptionRepository.Description = description;
         }
